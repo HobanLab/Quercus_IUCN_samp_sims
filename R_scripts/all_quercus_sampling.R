@@ -39,7 +39,6 @@ for(x in 1:length(species_list)) {
   import_arp2gen_files(paste(mydir,species_list[x],sep=""),".arp$")
 }
 
-<<<<<<< HEAD
 #pre-defining the array to store results
 #first dimension: 16, for 16 quercus species. this is represented by the outer for loop
 #second dimension: 500, sampling from 1 to 500 individuals per species, saving results for each iteration
@@ -47,29 +46,14 @@ for(x in 1:length(species_list)) {
 results_all_quercus = array(0, dim = c(16,500,100))
 
 total_alleles_all_quercus = array(0, dim=c(16,500,100))
-=======
-#pre-defining results array
-#20 rows = 20 different types of sampling (intensities)
-#100 columns = 100 simulation replicates
-results_q_acerifolia = array(0, dim = c(20, 100))
->>>>>>> 8ded2c9bdad5d355a83812820d3e8ddc193e02a8
 
 #Loop to simulate sampling
 #First, create a list of all genepop files (all replicates) to loop over
 #the variable 'i' represents each replicate
-<<<<<<< HEAD
 for(i in 1:length(species_list)) {
   setwd(paste(mydir,species_list[i],sep=""))
   list_files = list.files(paste(mydir,species_list[i],sep=""), pattern = ".gen$")
   for(j in 1:length(list_files)) {
-=======
-list_files = list.files(mydir, pattern = ".gen$")
-for(i in 1:length(list_files)) {
-  
-  increment = 0.05 #increment between different sampling strategies
-  counter = 0 #counter to indicate which sampling we are on
-  for(j in 1:20) {
->>>>>>> 8ded2c9bdad5d355a83812820d3e8ddc193e02a8
     #creating a temporary genind object (using Adegenet package) for each simulation replicate
     temp_genind = read.genepop(list_files[[i]], ncode=3) 
     
@@ -77,7 +61,6 @@ for(i in 1:length(list_files)) {
     first_ind = 1
     last_ind = sum(table(temp_genind@pop)) 
     
-<<<<<<< HEAD
     #for each replicate, sample up to 500 individuals, starting with 1
     for(k in 1:max_sample_size) {
       
@@ -98,41 +81,8 @@ for(i in 1:length(list_files)) {
       total_alleles_all_quercus[i,k,j] = total_alleles
       
     }
-=======
-    #for the first iteration, we don't want to sample 0, we just want to sample 1
-    if(counter == 0) {
-      sample_size = c(1,1,1,1)
-    } else {
-      sample_size = as.numeric(table(temp_genind@pop)*increment*counter) #sample size = population size*increment value*counter
-      sample_size = ceiling(sample_size) #rounding up if decimal value (can't sample a fractin of an individual)
-    }
-    
-    #defining which rows (individuals) from genind object to sample from 
-    rows_to_samp = c(sample(first_ind[1]:last_ind[1], sample_size[1]), sample(first_ind[2]:last_ind[2], sample_size[2]), sample(first_ind[3]:last_ind[3], sample_size[3]), sample(first_ind[4]:last_ind[4], sample_size[4]))
-    
-    #defining the alleles sampled
-    sample_n_alleles = sum(colSums(temp_genind@tab[rows_to_samp,])>0)
-    
-    #saving total alleles
-    total_alleles = ncol(temp_genind@tab)
-    
-    #saving percent alleles captured/ genetic conservation success
-    results_q_acerifolia[j,i] = sample_n_alleles/total_alleles
-    
-    #saving total alleles for reference
-    total_alleles_q_acerifolia[j,i] = total_alleles
-    
-    #increment counter variable
-    counter =  counter + 1
->>>>>>> 8ded2c9bdad5d355a83812820d3e8ddc193e02a8
   }
 }
 
-#saving results as R data
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
-<<<<<<< HEAD
 save(results_all_quercus, file="all_quercus_results.Rdata")
-=======
-save(results_q_acerifolia, file="q_acerifolia_results.Rdata")
-
->>>>>>> 8ded2c9bdad5d355a83812820d3e8ddc193e02a8
