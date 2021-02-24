@@ -30,7 +30,7 @@ import_arp2gen_files = function(mypath, mypattern) {
   setwd(mypath)
   temp_list_1 = list.files(mypath, mypattern)
   temp_list_2 = list(length = length(temp_list_1))
-  for(i in 1:length(temp_list_1)){temp_list_2[[i]]=arp2gen(temp_list_1[i])}
+  for(z in 1:length(temp_list_1)){temp_list_2[[z]]=arp2gen(temp_list_1[z])}
   temp_list_2
 }
 
@@ -55,7 +55,7 @@ for(i in 1:length(species_list)) {
   list_files = list.files(paste(mydir,species_list[i],sep=""), pattern = ".gen$")
   for(j in 1:length(list_files)) {
     #creating a temporary genind object (using Adegenet package) for each simulation replicate
-    temp_genind = read.genepop(list_files[[i]], ncode=3) 
+    temp_genind = read.genepop(list_files[[j]], ncode=3) 
     
     #defining the first and last individuals of the entire population, so we know where to sample between
     first_ind = 1
