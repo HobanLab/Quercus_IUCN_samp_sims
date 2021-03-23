@@ -1,4 +1,4 @@
-#Generic sampling script 
+#Sampling script for all quercus species
 
 #Library functions
 library(adegenet)
@@ -8,9 +8,17 @@ library(ggplot2)
 library(ggpubr)
 library(ggsignif)
 library(tidyr)
+library(hierfstat)
 
 #FLAGS
+#file conversion flag
+#set to true once files have been converted once
+#false if you want to convert files
 converted = TRUE
+#Fst flag
+#Fst code adds a lot of time to run the code 
+#so if you don't want to run it, keep Fst off by setting it FALSE
+f <- TRUE
 
 #Set working directory
 mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Simulations"
@@ -55,12 +63,25 @@ if(converted == FALSE) {
 }
 
 #pre-defining the array to store results
-#first dimension: 16, for 16 quercus species. this is represented by the outer for loop
+#first dimension: 12, for 12 quercus species. this is represented by the outer for loop
 #second dimension: 500, sampling from 1 to 500 individuals per species, saving results for each iteration
-#third dimension: 100 fir 100 simulation replicates per species
+#third dimension: 100 for 100 simulation replicates per species
 all_quercus_results = array(0, dim = c(12,500,100))
 
 total_alleles_all_quercus = array(0, dim=c(12,500,100))
+
+#storing Fst results
+#saving a list of genind objects created
+temp_genind_list <- list()
+
+#list of hierfstat
+temp_hierfstat <- list()
+
+##pwfst array
+pwfst_array = array(dim = c(4,4,100))
+
+##min, max, mean of replicates 
+mean_max_min_fst = array(dim = c(3,100,12))
 
 ###############################################################################################
 #SAMPLING
@@ -74,6 +95,24 @@ for(i in 1:length(species_list)) {
   for(j in 1:length(list_files)) {
     #creating a temporary genind object (using Adegenet package) for each simulation replicate
     temp_genind = read.genepop(list_files[[j]], ncode=3) 
+    
+    #calculating Fst
+    if(f == TRUE) {
+      ##creating genind list for QUAC genind 
+      temp_genind_list[[j]] <- temp_genind
+      
+      ##convert genind files to hierfstat format to run pwfst 
+      temp_hierfstat[[j]] <- genind2hierfstat(temp_genind_list[[j]])
+      
+      ##array to store all pwfst values
+      pwfst_array[,,j] <- pairwise.neifst(temp_hierfstat[[j]])
+      
+      ##calculate statistics for QUAC - max, min, mean fst 
+      mean_max_min_fst[1,j,i] <- mean(pwfst_array[,,j], na.rm = TRUE)
+      mean_max_min_fst[2,j,i] <- min(pwfst_array[,,j], na.rm = TRUE)
+      mean_max_min_fst[3,j,i] <- max(pwfst_array[,,j], na.rm = TRUE)
+      
+    }
     
     #defining the first and last individuals of the entire population, so we know where to sample between
     first_ind = 1
@@ -117,100 +156,104 @@ for(i in 1:length(species_list)) {
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
 save(all_quercus_results, file="all_quercus_results.Rdata")
 
-#################################################################################################
-#PROCESSING
-
-#converting matrices to data frames
-#splitting each species into its own dataframe for processing and naming columns
-
-q_acerifolia_df = as.data.frame(all_quercus_results[1,,])
-q_acerifolia_df_long = gather(q_acerifolia_df, replicate, prop_all)
-species=rep("q_acerifolia", 50000)
-q_acerifolia_df_long$species=species
-num_sampled=rep(1:500, 100)
-q_acerifolia_df_long$num_sampled=num_sampled
-
-q_arkansana_df = as.data.frame(all_quercus_results[2,,])
-q_arkansana_df_long = gather(q_arkansana_df, replicate, prop_all)
-species=rep("q_arkansana", 50000)
-q_arkansana_df_long$species=species
-num_sampled=rep(1:500, 100)
-q_arkansana_df_long$num_sampled=num_sampled
-
-q_boyntonii_df = as.data.frame(all_quercus_results[3,,])
-q_boyntonii_df_long = gather(q_boyntonii_df, replicate, prop_all)
-species=rep("q_boyntonii", 50000)
-q_boyntonii_df_long$species=species
-num_sampled=rep(1:500, 100)
-q_boyntonii_df_long$num_sampled=num_sampled
-
-q_carmenesis_df = as.data.frame(all_quercus_results[4,,])
-q_carmenesis_df_long = gather(q_carmenesis_df, replicate, prop_all)
-species=rep("q_carmenesis", 50000)
-q_carmenesis_df_long$species=species
-num_sampled=rep(1:500, 100)
-q_carmenesis_df_long$num_sampled=num_sampled
-
-q_cedrosensis_df = as.data.frame(all_quercus_results[5,,])
-q_cedrosensis_df_long = gather(q_cedrosensis_df, replicate, prop_all)
-species=rep("q_cedrosensis", 50000)
-q_cedrosensis_df_long$species=species
-num_sampled=rep(1:500, 100)
-q_cedrosensis_df_long$num_sampled=num_sampled
-
-q_engelmannii_df = as.data.frame(all_quercus_results[6,,])
-q_engelmannii_df_long = gather(q_engelmannii_df, replicate, prop_all)
-species=rep("q_engelmannii", 50000)
-q_engelmannii_df_long$species=species
-q_engelmannii_df_long$num_sampled=num_sampled
-
-q_georgiana_df = as.data.frame(all_quercus_results[7,,])
-q_georgiana_df_long = gather(q_georgiana_df, replicate, prop_all)
-species=rep("q_georgiana", 50000)
-q_georgiana_df_long$species=species
-q_georgiana_df_long$num_sampled=num_sampled
-
-q_graciliformis_df = as.data.frame(all_quercus_results[8,,])
-q_graciliformis_df_long = gather(q_graciliformis_df, replicate, prop_all)
-species=rep("q_graciliformis", 50000)
-q_graciliformis_df_long$species=species
-q_graciliformis_df_long$num_sampled=num_sampled
-
-q_harvardii_df = as.data.frame(all_quercus_results[9,,])
-q_harvardii_df_long = gather(q_harvardii_df, replicate, prop_all)
-species=rep("q_harvardii", 50000)
-q_harvardii_df_long$species=species
-q_harvardii_df_long$num_sampled=num_sampled
-
-q_hinckleyii_df = as.data.frame(all_quercus_results[10,,])
-q_hinckleyii_df_long = gather(q_hinckleyii_df, replicate, prop_all)
-species=rep("q_hinckleyii", 50000)
-q_hinckleyii_df_long$species=species
-q_hinckleyii_df_long$num_sampled=num_sampled
-
-q_oglethorpensis_df = as.data.frame(all_quercus_results[11,,])
-q_oglethorpensis_df_long = gather(q_oglethorpensis_df, replicate, prop_all)
-species=rep("q_oglethorpensis", 50000)
-q_oglethorpensis_df_long$species=species
-q_oglethorpensis_df_long$num_sampled=num_sampled
-
-q_pacifica_df = as.data.frame(all_quercus_results[12,,])
-q_pacifica_df_long = gather(q_pacifica_df, replicate, prop_all)
-species=rep("q_pacifica", 50000)
-q_pacifica_df_long$species=species
-q_pacifica_df_long$num_sampled=num_sampled
-
-#use rbind() to combined all vertically - it's going to be really large.
-combined_quercus_df = rbind(q_acerifolia_df_long, q_arkansana_df_long, q_boyntonii_df_long, q_carmenesis_df_long, q_cedrosensis_df_long, q_engelmannii_df_long, q_georgiana_df_long, q_graciliformis_df_long, q_harvardii_df_long, q_hinckleyii_df_long, q_oglethorpensis_df_long, q_pacifica_df_long)
-
-#saving the combined dataframe in .Rdata file
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
-save(combined_quercus_df, file="combined_quercus_df.Rdata")
-
-####################################################################################################
-#GRAPHICS
-
-#plot containing all oak species
-ggplot(data=combined_quercus_df, aes(x=num_sampled, y=prop_all, color=species)) +
-  geom_line()
-
+# #################################################################################################
+# #PROCESSING
+# 
+# #converting matrices to data frames
+# #splitting each species into its own dataframe for processing and naming columns
+# 
+# 
+# q_acerifolia_df = as.data.frame(all_quercus_results[1,,])
+# q_acerifolia_df_long = gather(q_acerifolia_df, replicate, prop_all)
+# species=rep("q_acerifolia", 50000)
+# q_acerifolia_df_long$species=species
+# num_sampled=rep(1:500, 100)
+# q_acerifolia_df_long$num_sampled=num_sampled
+# 
+# q_arkansana_df = as.data.frame(all_quercus_results[2,,])
+# q_arkansana_df_long = gather(q_arkansana_df, replicate, prop_all)
+# species=rep("q_arkansana", 50000)
+# q_arkansana_df_long$species=species
+# num_sampled=rep(1:500, 100)
+# q_arkansana_df_long$num_sampled=num_sampled
+# 
+# q_boyntonii_df = as.data.frame(all_quercus_results[3,,])
+# q_boyntonii_df_long = gather(q_boyntonii_df, replicate, prop_all)
+# species=rep("q_boyntonii", 50000)
+# q_boyntonii_df_long$species=species
+# num_sampled=rep(1:500, 100)
+# q_boyntonii_df_long$num_sampled=num_sampled
+# 
+# q_carmenesis_df = as.data.frame(all_quercus_results[4,,])
+# q_carmenesis_df_long = gather(q_carmenesis_df, replicate, prop_all)
+# species=rep("q_carmenesis", 50000)
+# q_carmenesis_df_long$species=species
+# num_sampled=rep(1:500, 100)
+# q_carmenesis_df_long$num_sampled=num_sampled
+# 
+# q_cedrosensis_df = as.data.frame(all_quercus_results[5,,])
+# q_cedrosensis_df_long = gather(q_cedrosensis_df, replicate, prop_all)
+# species=rep("q_cedrosensis", 50000)
+# q_cedrosensis_df_long$species=species
+# num_sampled=rep(1:500, 100)
+# q_cedrosensis_df_long$num_sampled=num_sampled
+# 
+# q_engelmannii_df = as.data.frame(all_quercus_results[6,,])
+# q_engelmannii_df_long = gather(q_engelmannii_df, replicate, prop_all)
+# species=rep("q_engelmannii", 50000)
+# q_engelmannii_df_long$species=species
+# q_engelmannii_df_long$num_sampled=num_sampled
+# 
+# q_georgiana_df = as.data.frame(all_quercus_results[7,,])
+# q_georgiana_df_long = gather(q_georgiana_df, replicate, prop_all)
+# species=rep("q_georgiana", 50000)
+# q_georgiana_df_long$species=species
+# q_georgiana_df_long$num_sampled=num_sampled
+# 
+# q_graciliformis_df = as.data.frame(all_quercus_results[8,,])
+# q_graciliformis_df_long = gather(q_graciliformis_df, replicate, prop_all)
+# species=rep("q_graciliformis", 50000)
+# q_graciliformis_df_long$species=species
+# q_graciliformis_df_long$num_sampled=num_sampled
+# 
+# q_harvardii_df = as.data.frame(all_quercus_results[9,,])
+# q_harvardii_df_long = gather(q_harvardii_df, replicate, prop_all)
+# species=rep("q_harvardii", 50000)
+# q_harvardii_df_long$species=species
+# q_harvardii_df_long$num_sampled=num_sampled
+# 
+# q_hinckleyii_df = as.data.frame(all_quercus_results[10,,])
+# q_hinckleyii_df_long = gather(q_hinckleyii_df, replicate, prop_all)
+# species=rep("q_hinckleyii", 50000)
+# q_hinckleyii_df_long$species=species
+# q_hinckleyii_df_long$num_sampled=num_sampled
+# 
+# q_oglethorpensis_df = as.data.frame(all_quercus_results[11,,])
+# q_oglethorpensis_df_long = gather(q_oglethorpensis_df, replicate, prop_all)
+# species=rep("q_oglethorpensis", 50000)
+# q_oglethorpensis_df_long$species=species
+# q_oglethorpensis_df_long$num_sampled=num_sampled
+# 
+# q_pacifica_df = as.data.frame(all_quercus_results[12,,])
+# q_pacifica_df_long = gather(q_pacifica_df, replicate, prop_all)
+# species=rep("q_pacifica", 50000)
+# q_pacifica_df_long$species=species
+# q_pacifica_df_long$num_sampled=num_sampled
+# 
+# #use rbind() to combined all vertically - it's going to be really large.
+# combined_quercus_df = rbind(q_acerifolia_df_long, q_arkansana_df_long, q_boyntonii_df_long, q_carmenesis_df_long, q_cedrosensis_df_long, q_engelmannii_df_long, q_georgiana_df_long, q_graciliformis_df_long, q_harvardii_df_long, q_hinckleyii_df_long, q_oglethorpensis_df_long, q_pacifica_df_long)
+# 
+# #saving the combined dataframe in .Rdata file
+# setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
+# save(combined_quercus_df, file="combined_quercus_df.Rdata")
+# 
+# ####################################################################################################
+# #GRAPHICS
+# setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
+# load("combined_quercus_df.Rdata")
+# 
+# #plot containing all oak species
+# ggplot(data=combined_quercus_df, aes(x=num_sampled, y=prop_all, color=species)) +
+#   geom_line() +
+#   ylim(0.5,1)
+# 
