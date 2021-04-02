@@ -18,10 +18,10 @@
 //Number of migration matrices : 0 implies no migration between demes
 2
 //Migration rates matrix 0
-0 0.001 0.001 0.001
-0.001 0 0.001 0.001
-0.001 0.001 0 0.001
-0.001 0.001 0.001 0 
+0 0.005 0.005 0.005
+0.005 0 0.005 0.005
+0.005 0.005 0 0.005
+0.005 0.005 0.005 0 
 //Migration rates matrix 1
 0 0 0 0
 0 0	0 0
