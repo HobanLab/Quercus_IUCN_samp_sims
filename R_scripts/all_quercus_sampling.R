@@ -21,12 +21,13 @@ conversion_flag = FALSE
 fst_flag = FALSE
 
 #Set working directory
-mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Simulations"
+mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims_local\\Simulation_files"
 setwd(mydir)
 
 #creating a list of the species we have simulated
 species_list = c("\\q_acerifolia",
                  "\\q_arkansana",
+                 "\\q_austrina",
                  "\\q_boyntonii",
                  "\\q_carmenensis",
                  "\\q_cedrosensis",
@@ -36,7 +37,8 @@ species_list = c("\\q_acerifolia",
                  "\\q_havardii",
                  "\\q_hinckleyii",
                  "\\q_oglethorpensis",
-                 "\\q_pacifica")
+                 "\\q_pacifica",
+                 "\\q_tomentella")
 
 #defining the maximum number of individuals we want to sample
 #for practical purposes, this will be 500 indivduals 
@@ -65,10 +67,10 @@ if(conversion_flag == TRUE) {
 #pre-defining the array to store results
 #first dimension: 500, sampling from 1 to 500 individuals per species, saving results for each iteration
 #second dimension: 100 for 100 simulation replicates per species
-#third dimension: 12, for 12 quercus species. this is represented by the outer for loop (12 matrix 'slices')
-all_quercus_results = array(0, dim = c(500,1000,12))
+#third dimension: 14, for 14 quercus species. this is represented by the outer for loop (12 matrix 'slices')
+final_quercus_results = array(0, dim = c(500,1000,14))
 
-total_alleles_all_quercus = array(0, dim=c(500,1000,12))
+final_alleles_all_quercus = array(0, dim=c(500,1000,14))
 
 #storing Fst results
 #saving a list of genind objects created
@@ -81,7 +83,7 @@ temp_hierfstat <- list()
 mean_max_min_fst = array(dim = c(3,100,12))#Fst run on 100 replicates
 
 ###############################################################################################
-#SAMPLING
+#SAMPLING/Fst
 
 #Loop to simulate sampling
 #First, create a list of all genepop files (all replicates) to loop over
@@ -89,7 +91,7 @@ mean_max_min_fst = array(dim = c(3,100,12))#Fst run on 100 replicates
 for(i in 1:length(species_list)) {
   setwd(paste(mydir,species_list[i],sep=""))
   list_files = list.files(paste(mydir,species_list[i],sep=""), pattern = ".gen$")
-  for(j in 1:(length(list_files))) { 
+  for(j in 1:(length(list_files))) {
     #creating a temporary genind object (using Adegenet package) for each simulation replicate
     temp_genind = read.genepop(list_files[[j]], ncode=3) 
     
@@ -140,10 +142,10 @@ for(i in 1:length(species_list)) {
 
         #saving the proportion of alleles captured -> alleles sampled/total alleles
         #represents genetic conservation success
-        all_quercus_results[k,j,i] = sample_n_alleles/total_alleles
+        final_quercus_results[k,j,i] = sample_n_alleles/total_alleles
 
         #saving the total alleles present across the populations for each species, and each replicate
-        total_alleles_all_quercus[k,j,i] = total_alleles
+        final_alleles_all_quercus[k,j,i] = total_alleles
       }else {
         break
       }
@@ -153,5 +155,5 @@ for(i in 1:length(species_list)) {
 
 #saving results to a .Rdata file 
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
-save(all_quercus_results, file="all_quercus_results.Rdata")
-#save(mean_max_min_fst, file="mean_min_max_fst_new.Rdata")
+save(final_quercus_results, file="quercus_final_results.Rdata")
+#save(mean_max_min_fst, file="new_fst.Rdata")

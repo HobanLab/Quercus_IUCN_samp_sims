@@ -3,18 +3,18 @@ library(ggplot2)
 ####################################################################################################
 #GRAPHICS
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
-load("combined_quercus_new.Rdata")
+load("combined_quercus_final.Rdata")
 
 #plot containing all oak species
 #number sampled on x axis
 #proportion of alleles on y axis
 #
-ggplot(data=combined_quercus, aes(x=num_sampled, y=avg_prop_all, color=species)) +
+ggplot(data=combined_quercus_new, aes(x=num_sampled, y=avg_prop_all, color=species)) +
   geom_line(size=1,aes(linetype=species)) +
-  scale_linetype_manual(values=c("solid", "dotted", "solid", "twodash", "dotted", "solid", "longdash", "solid", "dotdash", "solid", "dotted", "solid")) +
+  scale_linetype_manual(values=c("solid", "dotted", "longdash", "solid", "twodash", "dotted", "solid", "longdash", "solid", "dotdash", "solid", "dotted", "solid", "longdash")) +
   ylim(0.7,1) +
   xlim(0,400) +
-  ggtitle("Genetic diversity captured for varying sample sizes across 12 oak species") +
+  ggtitle("Genetic diversity captured for varying sample sizes across 14 oak species") +
   xlab("Number of unique individuals sampled") +
   ylab("Proportion of alleles captured") +
   labs(fill = "Species") +
@@ -73,3 +73,12 @@ q_ogle_fst
 #Q. pacifica 
 q_pac_fst = rowMeans(mean_max_min_fst[,,12])
 q_pac_fst
+
+load("new_fst.Rdata")
+q_austrina_fst = rowMeans(mean_max_min_fst[,,1])
+q_austrina_fst
+
+q_tomentella_fst = rowMeans(mean_max_min_fst[,,2])
+q_tomentella_fst
+##########################################################################################################
+#MINIMUMSAMPLE SIZE
