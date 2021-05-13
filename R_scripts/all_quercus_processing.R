@@ -1,12 +1,26 @@
-#All quercus data prep for plotting
-library(dplyr)
-#################################################################################################
-#PROCESSING
+# all_querucs_processing.R - All quercus data prep for plotting
 
+#This script imports the saved results array from all_quercus_sampling.R containing the proportion of alleles 
+#captured by the sample size across all replicates for all species. This script converts the results array
+#into separate dataframes for each species. Here, we also add column names and data to aid in plotting (add
+#number sampled columns, and species name columns to keep track of this information when plotting).
+#It is important to note that in this script, we average the simulation replicates for each sample size; this
+#is achieved using the rowMeans() function. We do this in order to create a smaller dataframe, and to create
+#a cleaner plot. 
+#In addition, at the bottom of this script, we calculcate the minimum sample size required to capture 95%
+#of the total alleles present. 
+
+#This script was written in collaboration by Kaylee Rosenberger, Emily Schumacher, and Dr. Sean Hoban
+
+#################################################################################################
+#Library functions
+library(dplyr)
+
+#Loading in results from all_quercus_sampling.R
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
 load("quercus_final_results.Rdata")
 
-#converting results matrices to data frames
+#converting results matrices to separate data frames
 q_acerifolia_df = as.data.frame(final_quercus_results[,,1]) #making results array into a dataframe
 q_acerifolia_df = rowMeans(q_acerifolia_df) #taking the means of the simulation replicates for cleaner plot
 q_acerifolia_df = as.data.frame(q_acerifolia_df) #rowMeans takes it out of dataframe format, so we convert BACK to dataframe again
@@ -132,7 +146,8 @@ species = rep("Q. tomentella", 500)
 q_tomentella_df$species = species
 
 
-#use rbind() to combined all vertically - it's going to be really large.
+#use rbind() to combine all dataframes vertically - it's going to be really large.
+#This is to have all dataframes in one large dataframe, so all species can be on the same plot
 combined_quercus_new = rbind(q_acerifolia_df, q_arkansana_df, q_austrina_df, q_boyntonii_df, q_carmenesis_df, q_cedrosensis_df, q_engelmannii_df, q_georgiana_df, q_graciliformis_df, q_harvardii_df, q_hinckleyii_df, q_oglethorpensis_df, q_pacifica_df, q_tomentella_df)
 
 #saving the combined dataframe in .Rdata file

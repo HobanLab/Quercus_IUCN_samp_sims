@@ -1,5 +1,18 @@
-#Sampling script for all quercus species
+# all_quercus_sampling.R - Sampling script for all quercus species
 
+#First, this script imports simulation files in .arp format and converts them to .gen format.
+#Then, the script runs the main sampling loop. This loop runs through every replicate of each species and
+#samples from 1 to 500 individuals for each simulation replicate. From this, we calculate the proportion of
+#alleles captured by the sample size, by dividing the captured alleles by the total alleles present in the
+#simulation. The results are saved in an array, and then saved as .Rdata, which can be imported to the next
+#R script, all_quercus_processing
+#The loop also implements Fst calculations, which can be turned off using a flag: fst_flag
+#similarly, the file conversion function can be turned off once files have been converted to .gen once
+#(there is no need to convert more than once, unless simulation files are changed) using the flag: conversion_flag
+
+#This script was written in collaboration by Kaylee Rosenberger, Emily Schumacher, and Dr. Sean Hoban
+
+########################################################################################################
 #Library functions
 library(adegenet)
 library(car)

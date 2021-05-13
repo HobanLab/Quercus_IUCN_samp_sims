@@ -1,7 +1,19 @@
-#Script to plot results for Quercus sampling
-library(ggplot2)
+# all_quercus_plotting.R - Script to plot results for Quercus sampling
+
+#This script plots the results of sampling with the x-axis representing the number of individuals sampled
+#and the y-axis representing the proportion of alleles captured. All 14 species are shown on this plot, 
+#represented by different color lines and different line types. Here, we use the processed data to plot
+#(averaged across replicates).
+#In addition, Fst is calculcated at the bottom of the script. We used these values to verify the realism
+#of our simulations
+
+##This script was written in collaboration by Kaylee Rosenberger, Emily Schumacher, and Dr. Sean Hoban
+
 ####################################################################################################
-#GRAPHICS
+#library functions
+library(ggplot2)
+
+#load in data from all_quercus_processing.R
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
 load("combined_quercus_final.Rdata")
 
@@ -23,7 +35,9 @@ ggplot(data=combined_quercus_new, aes(x=num_sampled, y=avg_prop_all, color=speci
 
 
 ###################################################################################################
-#Checking Fst - to make sure the simulations are somewhat realistic
+#Checking Fst - to make sure the simulations are realistic
+
+#load in data from all_quercus_sampling.R
 load("mean_min_max_fst_new.Rdata")
 
 #Q. acerifolia - low migration, small pops
@@ -80,5 +94,3 @@ q_austrina_fst
 
 q_tomentella_fst = rowMeans(mean_max_min_fst[,,2])
 q_tomentella_fst
-##########################################################################################################
-#MINIMUMSAMPLE SIZE
