@@ -4,8 +4,6 @@
 #and the y-axis representing the proportion of alleles captured. All 14 species are shown on this plot, 
 #represented by different color lines and different line types. Here, we use the processed data to plot
 #(averaged across replicates).
-#In addition, Fst is calculcated at the bottom of the script. We used these values to verify the realism
-#of our simulations
 
 ##This script was written in collaboration by Kaylee Rosenberger, Emily Schumacher, and Dr. Sean Hoban
 
@@ -33,64 +31,3 @@ ggplot(data=combined_quercus_new, aes(x=num_sampled, y=avg_prop_all, color=speci
   theme(text = element_text(size=15)) +
   theme_bw() #white background
 
-
-###################################################################################################
-#Checking Fst - to make sure the simulations are realistic
-
-#load in data from all_quercus_sampling.R
-load("mean_min_max_fst_new.Rdata")
-
-#Q. acerifolia - low migration, small pops
-q_acer_fst = rowMeans(mean_max_min_fst[,,1]) #averaging across replicates
-q_acer_fst
-
-#Q. arkansana
-q_ark_fst = rowMeans(mean_max_min_fst[,,2])
-q_ark_fst
-
-#Q. boyntonii - high migration, relatively small pops
-q_boyn_fst =rowMeans(mean_max_min_fst[,,3])
-q_boyn_fst
-
-#Q. carmenesis
-q_carm_fst = rowMeans(mean_max_min_fst[,,4])
-q_carm_fst
-
-#Q. cedrosensis
-q_cedro_fst = rowMeans(mean_max_min_fst[,,5])
-q_cedro_fst
-
-#Q. engelmannii - low migration, large pops
-q_engel_fst = rowMeans(mean_max_min_fst[,,6])
-q_engel_fst
-
-#Q. georgiana
-q_georg_fst = rowMeans(mean_max_min_fst[,,7])
-q_georg_fst
-
-#Q. graciliformis
-q_grac_fst = rowMeans(mean_max_min_fst[,,8])
-q_grac_fst
-
-#Q. havardii
-q_hav_fst = rowMeans(mean_max_min_fst[,,9])
-q_hav_fst
-
-#Q. hinckleyii
-q_hinck_fst = rowMeans(mean_max_min_fst[,,10])
-q_hinck_fst
-
-#Q. oglethorpensis 
-q_ogle_fst = rowMeans(mean_max_min_fst[,,11])
-q_ogle_fst
-
-#Q. pacifica 
-q_pac_fst = rowMeans(mean_max_min_fst[,,12])
-q_pac_fst
-
-load("new_fst.Rdata")
-q_austrina_fst = rowMeans(mean_max_min_fst[,,1])
-q_austrina_fst
-
-q_tomentella_fst = rowMeans(mean_max_min_fst[,,2])
-q_tomentella_fst

@@ -7,8 +7,6 @@
 #It is important to note that in this script, we average the simulation replicates for each sample size; this
 #is achieved using the rowMeans() function. We do this in order to create a smaller dataframe, and to create
 #a cleaner plot. 
-#In addition, at the bottom of this script, we calculcate the minimum sample size required to capture 95%
-#of the total alleles present. 
 
 #This script was written in collaboration by Kaylee Rosenberger, Emily Schumacher, and Dr. Sean Hoban
 
@@ -20,148 +18,37 @@ library(dplyr)
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
 load("quercus_final_results.Rdata")
 
-#converting results matrices to separate data frames
-q_acerifolia_df = as.data.frame(final_quercus_results[,,1]) #making results array into a dataframe
-q_acerifolia_df = rowMeans(q_acerifolia_df) #taking the means of the simulation replicates for cleaner plot
-q_acerifolia_df = as.data.frame(q_acerifolia_df) #rowMeans takes it out of dataframe format, so we convert BACK to dataframe again
-num_sampled = (1:500) #defining a column for sample size
-q_acerifolia_df$num_sampled = num_sampled #adding column to dataframe
-colnames(q_acerifolia_df) = c("avg_prop_all", "num_sampled") #changing column names
-species = rep("Q. acerifolia", 500) #defing species name
-q_acerifolia_df$species=species #adding column to dataframe
+#vector of species names
+species_names = c("Q. acerifolia", "Q. arksanana", "Q. austrina", "Q. boyntonnii", "Q. carmenensis", "Q. cedrosensis", "Q. engelmannii", "Q. georgiana",
+                  "Q. graciliformis", "Q. havardii", "Q. hinckleyii", "Q. oglethorpensis", "Q. pacifica", "Q. tomentella")
 
-##all following species follow the same processing as above
+#varaible to hold sample range
+num_sampled = (1:500)
 
-q_arkansana_df = as.data.frame(final_quercus_results[,,2])
-q_arkansana_df = rowMeans(q_arkansana_df)
-q_arkansana_df = as.data.frame(q_arkansana_df)
-q_arkansana_df$num_sampled = num_sampled
-colnames(q_arkansana_df) = c("avg_prop_all", "num_sampled")
-species = rep("Q. arkansana", 500)
-q_arkansana_df$species = species
+#varaible to hold column names for dataframe
+col_names = c("avg_prop_all", "num_sampled")
 
-q_austrina_df = as.data.frame(final_quercus_results[,,3])
-q_austrina_df = rowMeans(q_austrina_df)
-q_austrina_df = as.data.frame(q_austrina_df)
-q_austrina_df$num_sampled = num_sampled
-colnames(q_austrina_df) = c("avg_prop_all", "num_sampled")
-species = rep("Q. austrina", 500)
-q_austrina_df$species = species
+#saves a list of all newly processed dataframes. The list contains separate dataframes for each species
+combined_quercus_list = list()
 
-q_boyntonii_df = as.data.frame(final_quercus_results[,,4])
-q_boyntonii_df = rowMeans(q_boyntonii_df)
-q_boyntonii_df = as.data.frame(q_boyntonii_df)
-q_boyntonii_df$num_sampled = num_sampled
-colnames(q_boyntonii_df) = c("avg_prop_all", "num_sampled")
-species = rep("Q. boyntonii", 500)
-q_boyntonii_df$species=species
+#data processing loop
+for(i in 1:length(species_names)) {
+  temp_data_frame = as.data.frame(final_quercus_results[,,i]) #creating a temporary data frame to hold the current  
+  temp_data_frame = rowMeans(temp_data_frame) #taking means of simulation replicates for a cleaner plot
+  temp_data_frame = as.data.frame(temp_data_frame) # rowMeans takes it out of dataframe format so converting back to dataframe
+  temp_data_frame$num_sampled = num_sampled #defining a column of the sample size
+  colnames(temp_data_frame) = col_names #setting the column names
+  species = rep(species_names[i], 500) #creating a new column with the species names
+  temp_data_frame$species = species #setting the new columns values
+  
+  combined_quercus_list[[i]] = temp_data_frame 
+}
 
-
-q_carmenesis_df = as.data.frame(final_quercus_results[,,5])
-q_carmenesis_df = rowMeans(q_carmenesis_df)
-q_carmenesis_df = as.data.frame(q_carmenesis_df)
-q_carmenesis_df$num_sampled = num_sampled
-colnames(q_carmenesis_df) = c("avg_prop_all", "num_sampled")
-species = rep("Q. carmenensis", 500)
-q_carmenesis_df$species = species
-
-
-q_cedrosensis_df = as.data.frame(final_quercus_results[,,6])
-q_cedrosensis_df = rowMeans(q_cedrosensis_df)
-q_cedrosensis_df = as.data.frame(q_cedrosensis_df)
-q_cedrosensis_df$num_sampled = num_sampled
-colnames(q_cedrosensis_df) =c("avg_prop_all", "num_sampled")
-species = rep("Q. cedrosensis", 500)
-q_cedrosensis_df$species = species
-
-
-q_engelmannii_df = as.data.frame(final_quercus_results[,,7])
-q_engelmannii_df = rowMeans(q_engelmannii_df)
-q_engelmannii_df = as.data.frame(q_engelmannii_df)
-q_engelmannii_df$num_sampled = num_sampled
-colnames(q_engelmannii_df) =  c("avg_prop_all", "num_sampled")
-species = rep("Q. engelmannii", 500)
-q_engelmannii_df$species = species
-
-q_georgiana_df = as.data.frame(final_quercus_results[,,8])
-q_georgiana_df = rowMeans(q_georgiana_df)
-q_georgiana_df = as.data.frame(q_georgiana_df)
-q_georgiana_df$num_sampled = num_sampled
-colnames(q_georgiana_df) =  c("avg_prop_all", "num_sampled")
-species = rep("Q. georgiana", 500)
-q_georgiana_df$species = species
-
-
-q_graciliformis_df = as.data.frame(final_quercus_results[,,9])
-q_graciliformis_df = rowMeans(q_graciliformis_df)
-q_graciliformis_df = as.data.frame(q_graciliformis_df)
-q_graciliformis_df$num_sampled = num_sampled
-colnames(q_graciliformis_df) =  c("avg_prop_all", "num_sampled")
-species = rep("Q. graciliformis", 500)
-q_graciliformis_df$species = species
-
-
-q_harvardii_df = as.data.frame(final_quercus_results[,,10])
-q_harvardii_df = rowMeans(q_harvardii_df)
-q_harvardii_df = as.data.frame(q_harvardii_df)
-q_harvardii_df$num_sampled = num_sampled
-colnames(q_harvardii_df) =  c("avg_prop_all", "num_sampled")
-species = rep("Q. havardii", 500)
-q_harvardii_df$species = species
-
-
-q_hinckleyii_df = as.data.frame(final_quercus_results[,,11])
-q_hinckleyii_df = rowMeans(q_hinckleyii_df)
-q_hinckleyii_df = as.data.frame(q_hinckleyii_df)
-q_hinckleyii_df$num_sampled = num_sampled
-colnames(q_hinckleyii_df) =  c("avg_prop_all", "num_sampled")
-species = rep("Q. hinckleyii", 500)
-q_hinckleyii_df$species = species
-
-
-q_oglethorpensis_df = as.data.frame(final_quercus_results[,,12])
-q_oglethorpensis_df = rowMeans(q_oglethorpensis_df)
-q_oglethorpensis_df = as.data.frame(q_oglethorpensis_df)
-q_oglethorpensis_df$num_sampled = num_sampled
-colnames(q_oglethorpensis_df) =  c("avg_prop_all", "num_sampled")
-species = rep("Q. oglethorpensis", 500)
-q_oglethorpensis_df$species = species
-
-
-q_pacifica_df = as.data.frame(final_quercus_results[,,13])
-q_pacifica_df = rowMeans(q_pacifica_df)
-q_pacifica_df = as.data.frame(q_pacifica_df)
-q_pacifica_df$num_sampled = num_sampled
-colnames(q_pacifica_df) =  c("avg_prop_all", "num_sampled")
-species = rep("Q. pacifica", 500)
-q_pacifica_df$species = species
-
-
-q_tomentella_df = as.data.frame(final_quercus_results[,,14])
-q_tomentella_df = rowMeans(q_tomentella_df)
-q_tomentella_df = as.data.frame(q_tomentella_df)
-q_tomentella_df$num_sampled = num_sampled
-colnames(q_tomentella_df) = c("avg_prop_all", "num_sampled")
-species = rep("Q. tomentella", 500)
-q_tomentella_df$species = species
-
-
-#use rbind() to combine all dataframes vertically - it's going to be really large.
-#This is to have all dataframes in one large dataframe, so all species can be on the same plot
-combined_quercus_new = rbind(q_acerifolia_df, q_arkansana_df, q_austrina_df, q_boyntonii_df, q_carmenesis_df, q_cedrosensis_df, q_engelmannii_df, q_georgiana_df, q_graciliformis_df, q_harvardii_df, q_hinckleyii_df, q_oglethorpensis_df, q_pacifica_df, q_tomentella_df)
+#using rbind() to vertically bind all dataframes to one large dataframe, so that all species can be plotted
+#on the same graph in all_quercus_plotting.R
+combined_quercus_new = do.call(rbind, combined_quercus_list)
 
 #saving the combined dataframe in .Rdata file
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
 save(combined_quercus_new, file="combined_quercus_final.Rdata")
 
-##########################################################################################################
-#MINIMUMSAMPLE SIZE
-#Loop to get the minimum sample size required to capture 95% of the alleles
-#in 'wild' populations for each species
-#averaging each row, which represents all 1000 replicates (so we are averaging across replicates)
-minSize = vector(length=14)
-for(i in 1:14) {
-  minSize[i] = (min(which(rowMeans(final_quercus_results[,,i])>0.95)))
-  
-}
-minSize
