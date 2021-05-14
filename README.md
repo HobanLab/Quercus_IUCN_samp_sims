@@ -17,13 +17,14 @@ We chose 16 species from the IUCN Red List of endangered species in the US. We c
     After both cases, Simcoal 2 will ask for the number of simulation replicates and the genetic data type. Here we used 1 for the genetic data type of all simulations, representing diploid individuals. 
 **Simulation output files:**
     .par .arp .gen .simparam
-    Created through the software Simcoal2 after a parameter file is successfully imported into Simcoal2 and the simulation is run.  The .arp files (genetic data) are the initial dataset in Arlequin format; the .gen files are the datasets after conversion to genepop format.  The .simparam is just a mirror file of simulation parameters run.
+    Created through the software Simcoal2 after a parameter file is successfully imported into Simcoal2 and the simulation is run.  The .arp files (genetic data) are the initial dataset in Arlequin format; the .gen files are the datasets after conversion to genepop format.  The .simparam is just a mirror file of simulation parameters run. 
+    Note that only the first 25 simulation files for each species are stored on the GitHub repository. The rest are stored on a local drive, due to the large number of replicates. 
 **Rscripts:**
     .R 
     For this project, R scripts were used to import .arp files into R for conversion to .gen files through adegenet package, convert .gen files to genind objects through adegenet package, analyze data through functions associated with the adegenet package, run custom sampling scripts, and create figures for data visualization with package ggplot2
     R scripts should be run in the order: all_quercus_sampling.R -> all_quercus_processing.R -> all_quercus_plotting.R
 
 ### Directory contents
-    Figures
-    R_scripts
-    Simulations
+    Figures: contains figures created in R with ggplot2
+    R_scripts: contains R scripts and R data files
+    Simulations: contains parameter files for simulations and the first 25 of the simulation output files 
