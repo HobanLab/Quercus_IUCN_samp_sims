@@ -80,7 +80,7 @@ if(conversion_flag == TRUE) {
 #pre-defining the array to store results
 #first dimension: 500, sampling from 1 to 500 individuals per species, saving results for each iteration
 #second dimension: 100 for 100 simulation replicates per species
-#third dimension: 14, for 14 quercus species. this is represented by the outer for loop (12 matrix 'slices')
+#third dimension: 14, for 14 quercus species. this is represented by the outer for loop (14 matrix 'slices')
 final_quercus_results = array(0, dim = c(500,1000,14))
 
 final_alleles_all_quercus = array(0, dim=c(500,1000,14))
@@ -93,7 +93,7 @@ temp_genind_list <- list()
 temp_hierfstat <- list()
 
 ##min, max, mean of replicates 
-mean_max_min_fst = array(dim = c(3,100,12))#Fst run on 100 replicates
+mean_max_min_fst = array(dim = c(3,100,14))#Fst run on 100 replicates
 
 ###############################################################################################
 #SAMPLING/Fst

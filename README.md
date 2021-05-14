@@ -11,7 +11,10 @@ We chose 16 species from the IUCN Red List of endangered species in the US. We c
 **Parameter files:**
     .par .txt
     Edited in text editor Notepad++
-    These are input to the software Simcoal/Simcoal2 to create genetic datasets The .par signifies parameter files.  They contain information to create the genetic datasets via a coalescent simulation, including population sizes and migration rates. 
+    These are input to the software Simcoal/Simcoal2 to create genetic datasets The .par signifies parameter files.  They contain information to create the genetic datasets via a coalescent simulation, including population sizes and migration rates. Parameter files are written in the text editor Notepad++ 
+    There are multiple methods of running parameter files in Simcoal 2. You can run Simcoal 2 through the command line with the prompt: SIMCOAL2_1_2 <\file_name>
+    You may also open the software Simcoal 2, which will then prompt for the parameter file name
+    After both cases, Simcoal 2 will ask for the number of simulation replicates and the genetic data type. Here we used 1 for the genetic data type of all simulations, representing diploid individuals. 
 **Simulation output files:**
     .par .arp .gen .simparam
     Created through the software Simcoal2 after a parameter file is successfully imported into Simcoal2 and the simulation is run.  The .arp files (genetic data) are the initial dataset in Arlequin format; the .gen files are the datasets after conversion to genepop format.  The .simparam is just a mirror file of simulation parameters run.
