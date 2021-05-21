@@ -1,4 +1,4 @@
-#all_querucs_analysis - Analysis for all quercus simulation results
+# 4_min_size_fst_analysis.R - Analysis for all quercus simulation results
 
 #This script contains the calculation for getting the required sample size for all species required to capture
 #95% of the total alleles. 
@@ -22,7 +22,7 @@ for(i in 1:14) {
   minSize[i] = (min(which(rowMeans(final_quercus_results[,,i])>0.95)))
   
 }
-minSize
+save(minSize, file="min_samp_size.Rdata")
 
 ###################################################################################################
 #Checking Fst - to make sure the simulations are realistic
@@ -37,5 +37,4 @@ fst_results = array(0, dim = c(14,3))
 for(j in 1:14) {
   fst_results[j,] = rowMeans(mean_max_min_fst[,,j])
 }
-fst_results
-
+save(fst_results, file="fst_processed.Rdata")

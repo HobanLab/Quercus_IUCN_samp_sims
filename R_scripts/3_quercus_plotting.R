@@ -1,4 +1,4 @@
-# all_quercus_plotting.R - Script to plot results for Quercus sampling
+# 3_quercus_plotting.R - Script to plot results for Quercus sampling
 
 #This script plots the results of sampling with the x-axis representing the number of individuals sampled
 #and the y-axis representing the proportion of alleles captured. All 14 species are shown on this plot, 

@@ -1,4 +1,4 @@
-# all_querucs_processing.R - All quercus data prep for plotting
+# 2_querucs_processing.R - All quercus data prep for plotting
 
 #This script imports the saved results array from all_quercus_sampling.R containing the proportion of alleles 
 #captured by the sample size across all replicates for all species. This script converts the results array

@@ -1,4 +1,4 @@
-# all_quercus_sampling.R - Sampling script for all quercus species
+# 1_quercus_main_sampling.R - Sampling script for all quercus species
 
 #First, this script imports simulation files in .arp format and converts them to .gen format.
 #Then, the script runs the main sampling loop. This loop runs through every replicate of each species and

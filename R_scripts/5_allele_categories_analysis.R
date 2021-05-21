@@ -1,4 +1,4 @@
-# all_quercus_sampling.R - Sampling script for all quercus species
+# 5_allele_categories_analysis.R - Sampling script for all quercus species
 
 #This script calculcates the proportion of alleles in several allele categories (global, globally very common, globally rare, etc...)
 
