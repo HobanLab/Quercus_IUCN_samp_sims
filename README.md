@@ -22,7 +22,7 @@ We chose 16 species from the IUCN Red List of endangered species in the US. We c
 **Rscripts:**
     .R 
     For this project, R scripts were used to import .arp files into R for conversion to .gen files through adegenet package, convert .gen files to genind objects through adegenet package, analyze data through functions associated with the adegenet package, run custom sampling scripts, and create figures for data visualization with package ggplot2
-    R scripts should be run in the order: 1_quercus_main_sampling.R -> 2_quercus_data_processing.R -> 3_quercus_plotting.R -> 4_min_size_fst_analysis.R -> 5_allele_categories_analysis.R
+    R scripts should be run in the order: 1_quercus_main_sampling.R -> 2_quercus_data_processing.R -> 3_quercus_plotting.R -> 4_min_size_fst_analysis.R -> 5_allele_categories_analysis.R -> 6_regression_analysis_plot.R
 
 ### Directory contents
     Figures: contains figures created in R with ggplot2

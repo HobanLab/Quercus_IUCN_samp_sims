@@ -14,6 +14,7 @@ setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
 load("combined_quercus_final.Rdata")
 load("min_samp_size.Rdata")
 load("fst_processed.Rdata")
+load("prop_captured.Rdata")
 
 #####################################################################################################
 #Min size vs. Fst
@@ -77,3 +78,45 @@ ggplot(min_size_vs_num_pops, aes(numPops, minSize)) +
   geom_point() +
   stat_smooth(method=lm) +
   ggtitle("Min size vs. number of pops.")
+
+###################################################################################################
+#prop. captured in n=50 vs. Fst
+
+prop_captured = as.data.frame(prop_captured)
+
+#combining data frames
+prop_capt_vs_fst = data.frame(prop_captured, mean_fst_results)
+prop_capt_vs_fst
+
+fst_prop_capt_model = lm(prop_captured ~ mean_fst_results, data = prop_capt_vs_fst)
+summary(fst_prop_capt_model)
+
+ggplot(prop_capt_vs_fst, aes(mean_fst_results, prop_captured)) +
+  geom_point() +
+  stat_smooth(method=lm) +
+  ggtitle("Prop. of alleles captured in n=50 vs. Fst")
+
+####################################################################################################
+#prop captured in n=50 vs. Total pop size
+
+prop_capt_vs_pop_size = data.frame(prop_captured, popSizes)
+
+pop_size_prop_capt_model = lm(prop_captured ~ popSizes, data = prop_capt_vs_pop_size)
+summary(pop_size_prop_capt_model)
+
+ggplot(prop_capt_vs_pop_size, aes(popSizes, prop_captured)) +
+  geom_point() +
+  stat_smooth(method=lm) +
+  ggtitle("Prop. of alleles captured in n=50 vs. Total population size")
+
+#####################################################################################################
+#prop captured in n=50 vs. number of populations
+prop_capt_vs_num_pops = data.frame(prop_captured, numPops)
+
+prop_capt_num_pops_model = lm(prop_captured ~ numPops, data = prop_capt_vs_num_pops)
+summary(prop_capt_num_pops_model)
+
+ggplot(prop_capt_vs_num_pops, aes(numPops, prop_captured)) +
+  geom_point() +
+  stat_smooth(method=lm) +
+  ggtitle("Prop. of alleles captured in n=50 vs. Number of populations")
