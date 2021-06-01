@@ -9,6 +9,8 @@
 #The loop also implements Fst calculations, which can be turned off using a flag: fst_flag
 #similarly, the file conversion function can be turned off once files have been converted to .gen once
 #(there is no need to convert more than once, unless simulation files are changed) using the flag: conversion_flag
+#Finally, there is code within the loop to calculate the number of alleles existing in different "allele categories"
+#such as global, globally rare, locally rare, etc...
 
 #This script was written in collaboration by Kaylee Rosenberger, Emily Schumacher, and Dr. Sean Hoban
 
@@ -32,6 +34,10 @@ conversion_flag = FALSE
 #Fst code adds a lot of time to run the code 
 #so if you don't want to run it, keep Fst off by setting it FALSE
 fst_flag = TRUE
+#allele category flag
+#this flag allows code that runs the allele category code to be turned on
+#when the flag is set to TRUE
+allele_cat_flag = TRUE
 
 #Set working directory
 mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims_local\\Simulation_files"
@@ -60,6 +66,9 @@ max_sample_size = 500
 #number of replicates of genetic simulation
 num_replicates = 1000
 
+#number of species simulated
+num_species = length(species_list)
+
 #Defining an import function
 #converts all arlequin files in a folder to genepop files
 import_arp2gen_files = function(mypath, mypattern) {
@@ -77,7 +86,22 @@ if(conversion_flag == TRUE) {
   }
 }
 
-#pre-defining the array to store results
+#including file with useful functions written by Dr. Sean Hoban
+source("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts\\Fa_sample_funcs.R")
+##functions
+colMax <- function(data) sapply(data, max, na.rm = TRUE)
+sample.pop<-function(genind_obj,vect_pop_ID,vect_samp_sizes){
+  p<-length(vect_pop_ID)
+  if (p>1) {
+    for (p in 1:length(vect_pop_ID))
+      alleles[p,]<-colSums(genind_obj[[vect_pop_ID[p]]]@tab[sample(1:nrow(genind_obj[[vect_pop_ID[p]]]@tab), vect_samp_sizes[p]),],na.rm=T)
+    alleles<-colSums(alleles)
+  } else {alleles<-colSums(genind_obj[[vect_pop_ID[p]]]@tab[sample(1:nrow(genind_obj[[vect_pop_ID[p]]]@tab), vect_samp_sizes[p]),],na.rm=T)}
+  
+  alleles
+}    
+
+#pre-defining the array to store sampling results
 #first dimension: 500, sampling from 1 to 500 individuals per species, saving results for each iteration
 #second dimension: 100 for 100 simulation replicates per species
 #third dimension: 14, for 14 quercus species. this is represented by the outer for loop (14 matrix 'slices')
@@ -95,6 +119,39 @@ temp_hierfstat <- list()
 ##min, max, mean of replicates 
 mean_max_min_fst = array(dim = c(3,100,14))#Fst run on 100 replicates
 
+#ALLELE CATEGORIES VARAIBLES 
+##allele frequency categories 
+list_allele_cat<-c("global","glob_v_com","glob_com","glob_lowfr","glob_rare","reg_rare","loc_com_d1","loc_com_d2","loc_rare")
+
+##defining variables to store allele cap
+all_cap_samp <- array(dim = c(100, length(list_allele_cat), num_species))
+
+##
+all_cap_samp_per <- array(dim = c(100, length(list_allele_cat), num_species))
+
+##species abbreviations 
+species_abbrevs <- c("QUAC","QUAR","QUAU", "QUBO","QUCA","QUCE","QUEN","QUGE","QUGR","QUHA","QUHI","QUOG","QUPA", "QUTO")
+
+##allelic existing by species table 
+all_existing_by_sp_df <- matrix(nrow = length(species_list), ncol = length(list_allele_cat))
+colnames(all_existing_by_sp_df) <- list_allele_cat
+rownames(all_existing_by_sp_df) <- species_abbrevs
+
+all_existing_by_sp_reps = array(dim = c(100,length(list_allele_cat),length(species_abbrevs)))
+
+##alleles captured by sampling mean 
+all_cap_mean <- matrix(nrow = length(species_list), ncol = length(list_allele_cat))
+colnames(all_cap_mean) <- list_allele_cat
+rownames(all_cap_mean) <- species_abbrevs
+
+##alleles sampled 
+all_cap_cat_per <- matrix(nrow = length(species_list), ncol = length(list_allele_cat))
+colnames(all_cap_cat_per) <- list_allele_cat
+rownames(all_cap_cat_per) <- species_abbrevs
+
+##combo data frame with alleles captured by category vs. % captured 
+all_cap_cat_df <- matrix(nrow = length(species_list), ncol = length(list_allele_cat))
+
 ###############################################################################################
 #SAMPLING/Fst
 
@@ -107,6 +164,27 @@ for(i in 1:length(species_list)) {
   for(j in 1:(length(list_files))) { 
     #creating a temporary genind object (using Adegenet package) for each simulation replicate
     temp_genind = read.genepop(list_files[[j]], ncode=3) 
+    
+    if(allele_cat_flag == TRUE) {
+      #Allele category processing
+      #First, calculate number of individuals per population
+      n_ind <- table(temp_genind@pop)
+      
+      ##Then create a genpop file for temp_genind
+      Spp_tot_genpop <- genind2genpop(temp_genind)
+      
+      ##separate by population 
+      Spp_tot_genind_sep <- seppop(temp_genind)
+      
+      ##get categories for all alleles captured 
+      allele_cat_tot <- get.allele.cat(Spp_tot_genpop, c(1:5), 2, n_ind)
+      
+      ##calculate the total number of alleles in each frequency category over 9 allele categories
+      for (a in 1:length(allele_cat_tot)) all_existing_by_sp_reps[j,a,i] <- sum(allele_cat_tot[[a]]>0,na.rm=T)
+      
+      ##create output for all alleles captured by 
+      for(b in 1:length(allele_cat_tot)) all_existing_by_sp_df[i,b] <- mean(all_existing_by_sp_reps[,b,i])
+    }
     
     #calculating Fst
     if(fst_flag == TRUE) {
@@ -159,14 +237,43 @@ for(i in 1:length(species_list)) {
 
         #saving the total alleles present across the populations for each species, and each replicate
         final_alleles_all_quercus[k,j,i] = total_alleles
-    }else {
-      break
+     }else {
+        break
+     }
     }
+    if(allele_cat_flag == TRUE) {
+      
+      ##start adding allelic capture code 
+      #to change to export at n=50, make a different variable like rows to samp that randomly selects 50 rows. 
+      alleles_cap <- colSums(temp_genind@tab[rows_to_samp,], na.rm = T)
+      
+      ##allelic capture code 
+      for (b in 1:length(allele_cat_tot)) all_cap_samp[j,b,i] <- sum(alleles_cap[allele_cat_tot[[b]]]>0)
+      
+      ##alleles per category captured by sampling 
+      for(b in 1:length(allele_cat_tot)) all_cap_mean[i,b] <- mean(all_cap_samp[,b,i])
+      
+      ##percent captured data frame 
+      all_cap_samp_per[,,i] <- all_cap_samp[,,i]/all_existing_by_sp_reps[,,i]
+      
+      ##all_cap_cat
+      for (c in 1:length(allele_cat_tot)) all_cap_cat_per[i,c] <- round(mean(all_cap_samp_per[,c,i])*100,3)
+      
+      ##loop to write out nice df 
+      for(d in 1:length(species_abbrevs)){
+        for(e in 1:length(allele_cat_tot)){
+          all_cap_cat_df[d,e] <- paste0(signif(all_cap_cat_per[d,e], 3), "%", " ", "(", signif(all_cap_mean[d,e],3), ")")
+        }
+      }
     }
   }
 }
 
 #saving results to a .Rdata file 
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
-#save(final_quercus_results, file="quercus_final_results.Rdata")
+save(final_quercus_results, file="quercus_final_results.Rdata")
 save(mean_max_min_fst, file="new_fst.Rdata")
+
+##write out alleles existing within each categories  
+write.csv(all_existing_by_sp_df, "all_existing_by_sp_df.csv")
+write.csv(all_cap_cat_df, "all_cap_cat_df.csv")
