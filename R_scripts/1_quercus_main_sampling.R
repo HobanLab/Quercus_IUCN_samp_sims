@@ -33,11 +33,11 @@ conversion_flag = FALSE
 #Fst flag
 #Fst code adds a lot of time to run the code 
 #so if you don't want to run it, keep Fst off by setting it FALSE
-fst_flag = TRUE
+fst_flag = FALSE
 #allele category flag
 #this flag allows code that runs the allele category code to be turned on
 #when the flag is set to TRUE
-allele_cat_flag = TRUE
+allele_cat_flag = FALSE
 
 #Set working directory
 mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims_local\\Simulation_files"
@@ -108,6 +108,8 @@ sample.pop<-function(genind_obj,vect_pop_ID,vect_samp_sizes){
 final_quercus_results = array(0, dim = c(500,1000,14))
 
 final_alleles_all_quercus = array(0, dim=c(500,1000,14))
+
+alleles_capt_all_quercus = array(0, dim=c(500,1000,14))
 
 #storing Fst results
 #saving a list of genind objects created
@@ -237,6 +239,9 @@ for(i in 1:length(species_list)) {
 
         #saving the total alleles present across the populations for each species, and each replicate
         final_alleles_all_quercus[k,j,i] = total_alleles
+        
+        #saving the total number of alleles captured for each species (as opposed to proportion)
+        alleles_capt_all_quercus[k,j,i] = sample_n_alleles
      }else {
         break
      }
@@ -272,6 +277,8 @@ for(i in 1:length(species_list)) {
 #saving results to a .Rdata file 
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
 save(final_quercus_results, file="quercus_final_results.Rdata")
+save(final_alleles_all_quercus, file="quercus_total_alleles.Rdata")
+save(alleles_capt_all_quercus, file="quercus_num_alleles_capt.Rdata")
 save(mean_max_min_fst, file="new_fst.Rdata")
 
 ##write out alleles existing within each categories  
