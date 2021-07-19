@@ -28,7 +28,11 @@
 0 0 0 0
 0 0 0 0
 //historical event: time, source, sink, migrants, new deme size, new growth rate, migration matrix index
-4 historical events
+8 historical events
+50 0 0 0 20 0 0
+50 1 1 0 20 0 0
+50 2 2 0 20 0 0
+50 3 3 0 20 0 0
 10000 0 0 0 1.00 0 1
 10000 1 0 1 1.00 0 1
 10000 2 0 1 1.00 0 1
