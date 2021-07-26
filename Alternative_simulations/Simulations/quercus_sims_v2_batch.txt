@@ -1,4 +1,4 @@
-1 1
+1000 1
 q_acerifolia.par
 q_arkansana.par
 q_austrina.par
