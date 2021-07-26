@@ -12,7 +12,7 @@
 library(ggplot2)
 
 #load in data from all_quercus_processing.R
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_simulations\\R-scripts")
 load("combined_quercus_final.Rdata")
 
 #plot containing all oak species

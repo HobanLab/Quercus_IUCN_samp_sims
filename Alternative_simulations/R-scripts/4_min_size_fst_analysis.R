@@ -11,7 +11,7 @@
 #MINIMUM SAMPLE SIZE
 
 #Loading in results from all_quercus_sampling.R
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_simulations\\R-scripts")
 load("quercus_final_results.Rdata") 
 
 num_species = 14

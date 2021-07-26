@@ -14,8 +14,8 @@
 #Library functions
 library(dplyr)
 
-#Loading in results from all_quercus_sampling.R
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
+#Loading in results from all_quercus_sampling.R for alternative simulations 
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_simulations\\R-scripts")
 load("quercus_final_results.Rdata")
 
 #vector of species names
@@ -49,6 +49,6 @@ for(i in 1:length(species_names)) {
 combined_quercus_new = do.call(rbind, combined_quercus_list)
 
 #saving the combined dataframe in .Rdata file
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_simulations\\R-scripts")
 save(combined_quercus_new, file="combined_quercus_final.Rdata")
 

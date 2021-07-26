@@ -29,18 +29,18 @@ library(hierfstat)
 #file conversion flag
 #set to true once files have been converted once
 #false if you want to convert files
-conversion_flag = FALSE
+conversion_flag = TRUE
 #Fst flag
 #Fst code adds a lot of time to run the code 
 #so if you don't want to run it, keep Fst off by setting it FALSE
-fst_flag = FALSE
+fst_flag = TRUE
 #allele category flag
 #this flag allows code that runs the allele category code to be turned on
 #when the flag is set to TRUE
-allele_cat_flag = FALSE
+allele_cat_flag = TRUE
 
-#Set working directory
-mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims_local\\Simulation_files"
+#Set working directory to the path that contains the folder of all of your simulation files 
+mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_simulations\\Simulations"
 setwd(mydir)
 
 #creating a list of the species we have simulated
@@ -275,7 +275,8 @@ for(i in 1:length(species_list)) {
 }
 
 #saving results to a .Rdata file 
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
+#saving to the file location containing R scripts for the alternative simulations (make sure to keep separate from other simulations)
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_simulations\\R_scripts")
 save(final_quercus_results, file="quercus_final_results.Rdata")
 save(final_alleles_all_quercus, file="quercus_total_alleles.Rdata")
 save(alleles_capt_all_quercus, file="quercus_num_alleles_capt.Rdata")
