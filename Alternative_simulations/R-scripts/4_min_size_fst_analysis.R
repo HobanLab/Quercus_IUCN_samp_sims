@@ -34,6 +34,7 @@ for(i in 1:num_species) {
 }
 save(prop_captured, file="prop_captured.Rdata")
 
+
 ##########################################################################################################
 #Checking Fst - to make sure the simulations are realistic
 

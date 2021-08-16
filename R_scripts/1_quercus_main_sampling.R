@@ -40,7 +40,11 @@ fst_flag = FALSE
 allele_cat_flag = FALSE
 
 #Set working directory
-mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims_local\\Simulation_files"
+if(.Platform$OS.type=='Windows') { 
+  mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Simulations" #If Windows, use this file path
+} else if(.Platform$OS.type=='Unix') {
+  mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Simulations" #If Linux, use this file path
+}
 setwd(mydir)
 
 #creating a list of the species we have simulated
@@ -81,8 +85,15 @@ import_arp2gen_files = function(mypath, mypattern) {
 
 #converting all simulation files from arlequin format to genepop format using defined import function
 if(conversion_flag == TRUE) {
-  for(x in 1:length(species_list)) {
-    import_arp2gen_files(paste(mydir,species_list[x],sep=""),".arp$")
+  if(.Platform$OS.type=="windows") { #Windows doesn't allow forking or mclapply(), so we do convert normally, which is time consuming
+    for(x in 1:length(species_list)) {
+      import_arp2gen_files(paste(mydir,species_list[x],sep=""),".arp$")
+    }
+  }else if(.Platform$OS.type=="unix") { # If Unix, can use mclapply(), which utilizes forking to speed up the conversion process by spreading the process over multiple cores
+    for (scen in 1:length(species_list)){
+      arp_file_list<-list.files(paste0(mydir,species_list[scen],sep="/"))
+      mclapply(arp_file_list,arp2gen,mc.cores=28) #could go higher than 28
+    }
   }
 }
 

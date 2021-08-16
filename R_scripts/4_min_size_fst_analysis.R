@@ -12,7 +12,7 @@
 
 #Loading in results from all_quercus_sampling.R
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts")
-load("quercus_final_results.Rdata") 
+load("combined_quercus_final.Rdata")
 
 num_species = 14
 
@@ -25,6 +25,23 @@ for(i in 1:num_species) {
   
 }
 save(minSize, file="min_samp_size.Rdata")
+
+#########################################################################################################
+#QUARTILES 
+
+#defining a list to save the quartiles for each species 
+lower_quartile = vector(length = num_species)
+upper_quartile = vector(length = num_species)
+lower_quartile_row = vector(length = num_species)
+upper_quartile_row = vector(length = num_species)
+#Loop to calculate quartiles for each species
+for(i in 1:num_species) {
+  lower_quartile[i] = quantile(rowMeans(final_quercus_results[,,i]), probs = c(0.25))
+  lower_quartile_row[i] = min(which(rowMeans(final_quercus_results[,,i])>=lower_quartile[i]))
+  
+  upper_quartile[i] = quantile(rowMeans(final_quercus_results[,,i]), probs = c(0.75))
+  upper_quartile_row[i] = min(which(rowMeans(final_quercus_results[,,i])>=upper_quartile[i]))
+}
 
 ##########################################################################################################
 #Proportion captured in sample size of 50
