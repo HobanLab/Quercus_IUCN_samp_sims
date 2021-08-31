@@ -32,4 +32,4 @@
 // Chromosome structure 1 begins with number of loci
 1
 //per block: data type, number of loci, per generation recombination and mutation rates and optional parameters
-MICROSAT      1        0.0005          0.0025           0        20
+MICROSAT      1        0.0005          0.0005           0        20
