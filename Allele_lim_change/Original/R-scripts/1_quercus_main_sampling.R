@@ -41,9 +41,9 @@ allele_cat_flag = FALSE
 
 #Set working directory
 if(.Platform$OS.type=='Windows') { 
-  mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_check\\Original\\Simulations" #If Windows, use this file path
+  mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original\\Simulations" #If Windows, use this file path
 } else if(.Platform$OS.type=='Unix') {
-  mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Allele_lim_checl/Original\Simulations" #If Linux, use this file path
+  mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Allele_lim_change/Original\Simulations" #If Linux, use this file path
 }
 setwd(mydir)
 
