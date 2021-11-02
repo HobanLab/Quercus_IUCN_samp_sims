@@ -130,7 +130,10 @@ temp_genind_list <- list()
 temp_hierfstat <- list()
 
 ##min, max, mean of replicates 
-mean_max_min_fst = array(dim = c(3,100,14))#Fst run on 100 replicates
+#first dim. - min, min and max = 3
+#second dim - run fst on 100 replicates
+#third dim - 14 species of oaks
+mean_max_min_fst = array(dim = c(3,100,14))
 
 #ALLELE CATEGORIES VARAIBLES 
 ##allele frequency categories 
@@ -286,11 +289,11 @@ for(i in 1:length(species_list)) {
 }
 
 #saving results to a .Rdata file 
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_check\\Alternative\\R-scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Alternative\\R-scripts")
 save(final_quercus_results, file="quercus_final_results.Rdata")
 save(final_alleles_all_quercus, file="quercus_total_alleles.Rdata")
 save(alleles_capt_all_quercus, file="quercus_num_alleles_capt.Rdata")
-save(mean_max_min_fst, file="new_fst.Rdata")
+save(mean_max_min_fst, file="quercus_fst.Rdata")
 
 ##write out alleles existing within each categories  
 write.csv(all_existing_by_sp_df, "all_existing_by_sp_df.csv")

@@ -286,11 +286,11 @@ for(i in 1:length(species_list)) {
 }
 
 #saving results to a .Rdata file 
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_check\\Original\\R-scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original\\R-scripts")
 save(final_quercus_results, file="quercus_final_results.Rdata")
 save(final_alleles_all_quercus, file="quercus_total_alleles.Rdata")
 save(alleles_capt_all_quercus, file="quercus_num_alleles_capt.Rdata")
-save(mean_max_min_fst, file="new_fst.Rdata")
+save(mean_max_min_fst, file="quercus_fst.Rdata")
 
 ##write out alleles existing within each categories  
 write.csv(all_existing_by_sp_df, "all_existing_by_sp_df.csv")
