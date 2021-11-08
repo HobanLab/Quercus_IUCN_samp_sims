@@ -25,6 +25,12 @@ library(ggsignif)
 library(tidyr)
 library(hierfstat)
 
+#version variabble keeps track of which version of simulations you are analysing -- original parameters, or alternative parameters
+#alt = alternative
+#orig = original
+#change this variable when working on a different version
+version = "orig"
+
 #FLAGS
 #file conversion flag
 #set to true once files have been converted once
@@ -40,28 +46,45 @@ fst_flag = FALSE
 allele_cat_flag = FALSE
 
 #Set working directory
-if(.Platform$OS.type=='Windows') { 
-  mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original\\Simulations" #If Windows, use this file path
-} else if(.Platform$OS.type=='Unix') {
-  mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Allele_lim_change/Original\Simulations" #If Linux, use this file path
+if(.Platform$OS.type=='windows') { 
+  if(version=='orig'){
+    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original_sim_files" #If Windows and original sims, use this file path
+  } else if(version=='alt'){
+    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Alternative_sim_files"
+  }
+} else if(.Platform$OS.type=='unix') {
+  if(version=='orig') {
+    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Allele_lim_change/Original_sim_files" #If Linux, use this file path
+  } else if(version=='alt'){
+    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Allele_lim_change/Alternative_sim_files"
+  }
 }
 setwd(mydir)
 
 #creating a list of the species we have simulated
-species_list = c("\\q_acerifolia",
-                 "\\q_arkansana",
-                 "\\q_austrina",
-                 "\\q_boyntonii",
-                 "\\q_carmenensis",
-                 "\\q_cedrosensis",
-                 "\\q_engelmannii",
-                 "\\q_georgiana",
-                 "\\q_graciliformis",
-                 "\\q_havardii",
-                 "\\q_hinckleyii",
-                 "\\q_oglethorpensis",
-                 "\\q_pacifica",
-                 "\\q_tomentella")
+species_list = c("q_acerifolia",
+                 "q_arkansana",
+                 "q_austrina",
+                 "q_boyntonii",
+                 "q_carmenensis",
+                 "q_cedrosensis",
+                 "q_engelmannii",
+                 "q_georgiana",
+                 "q_graciliformis",
+                 "q_havardii",
+                 "q_hinckleyii",
+                 "q_oglethorpensis",
+                 "q_pacifica",
+                 "q_tomentella")
+if(.Platform$OS.type=='windows'){
+  for(c in 1:length(species_list)) {
+    species_list[[c]] = paste("\\", species_list[[c]], sep="")
+  }
+} else if(.Platform$OS.type=='unix'){
+  for(v in 1:length(species_list)){
+    species_list[[v]] = paste("/", species_list[[v]], sep="")
+  }
+}
 
 #defining the maximum number of individuals we want to sample
 #for practical purposes, this will be 500 indivduals 
@@ -287,11 +310,11 @@ for(i in 1:length(species_list)) {
 
 #saving results to a .Rdata file 
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original\\R-scripts")
-save(final_quercus_results, file="quercus_final_results.Rdata")
-save(final_alleles_all_quercus, file="quercus_total_alleles.Rdata")
-save(alleles_capt_all_quercus, file="quercus_num_alleles_capt.Rdata")
-save(mean_max_min_fst, file="quercus_fst.Rdata")
+save(final_quercus_results, file=paste("quercus_final_results_", version, ".Rdata", sep=""))
+save(final_alleles_all_quercus, file=paste("quercus_total_alleles_", version, ".Rdata", sep=""))
+save(alleles_capt_all_quercus, file=paste("quercus_num_alleles_capt_", version, ".Rdata", sep=""))
+save(mean_max_min_fst, file=paste("quercus_fst_", version, ".Rdata", sep=""))
 
 ##write out alleles existing within each categories  
-write.csv(all_existing_by_sp_df, "all_existing_by_sp_df.csv")
-write.csv(all_cap_cat_df, "all_cap_cat_df.csv")
+write.csv(all_existing_by_sp_df, paste("all_existing_by_sp_df_", version, ".csv", sep=""))
+write.csv(all_cap_cat_df, paste("all_cap_cat_df_", version, ".csv", sep=""))

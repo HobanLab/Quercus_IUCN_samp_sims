@@ -10,9 +10,15 @@
 ##########################################################################################################
 #MINIMUM SAMPLE SIZE
 
+#version variable keeps track of which version of simulation parameters you are working with
+#orig = original
+#alt = alternative
+version = "orig"
+
 #Loading in results from all_quercus_sampling.R
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original\\R-scripts")
-load("combined_quercus_final.Rdata")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
+
+load(paste("combined_quercus_", version, ".Rdata,", sep=""))
 
 num_species = 14
 
@@ -24,7 +30,7 @@ for(i in 1:num_species) {
   minSize[i] = (min(which(rowMeans(final_quercus_results[,,i])>0.95)))
   
 }
-save(minSize, file="min_samp_size.Rdata")
+save(minSize, file=paste("min_samp_size_", version, ".Rdata", sep=""))
 
 #########################################################################################################
 #QUARTILES 

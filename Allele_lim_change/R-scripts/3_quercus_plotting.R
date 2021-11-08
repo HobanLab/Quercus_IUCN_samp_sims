@@ -11,9 +11,15 @@
 #library functions
 library(ggplot2)
 
+#version variable keeps track of which version of simulation parameters you are working with
+#orig = original
+#alt = alternative
+version = "orig"
+
 #load in data from all_quercus_processing.R
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original\\R-scripts")
-load("combined_quercus_final.Rdata")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
+load(paste("combined_quercus_", version, ".Rdata", sep=""))
+
 
 #plot containing all oak species
 #number sampled on x axis
