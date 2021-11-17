@@ -30,7 +30,7 @@ ggplot(data=combined_quercus_new, aes(x=num_sampled, y=avg_prop_all, color=speci
   scale_linetype_manual(values=c("solid", "dotted", "longdash", "solid", "twodash", "dotted", "solid", "longdash", "solid", "dotdash", "solid", "dotted", "solid", "longdash")) +
   ylim(0.7,1) +
   xlim(0,400) +
-  ggtitle("Genetic diversity captured for varying sample sizes across 14 oak species") +
+  ggtitle(paste("Genetic diversity captured across 14 oak species", version)) +
   xlab("Number of unique individuals sampled") +
   ylab("Proportion of alleles captured") +
   labs(fill = "Species") +

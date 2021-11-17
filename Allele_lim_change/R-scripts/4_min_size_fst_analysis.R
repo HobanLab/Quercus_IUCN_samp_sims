@@ -17,8 +17,7 @@ version = "orig"
 
 #Loading in results from all_quercus_sampling.R
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
-
-load(paste("combined_quercus_", version, ".Rdata,", sep=""))
+load(paste("quercus_final_results_", version, ".Rdata", sep=""))
 
 num_species = 14
 

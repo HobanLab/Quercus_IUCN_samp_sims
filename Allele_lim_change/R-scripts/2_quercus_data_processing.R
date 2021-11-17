@@ -17,11 +17,11 @@ library(dplyr)
 #version variable keeps track of which version of simulation parameters you are working with
 #orig = original
 #alt = alternative
-version = "orig"
+version = "alt"
 
 #Loading in results from previous script
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
-load(paste("quercus_allcheck_", version, ".Rdata", sep=""))
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")#directory
+load(paste("quercus_final_results_", version, ".Rdata", sep=""))#file name
 
 #vector of species names
 species_names = c("Q. acerifolia", "Q. arksanana", "Q. austrina", "Q. boyntonnii", "Q. carmenensis", "Q. cedrosensis", "Q. engelmannii", "Q. georgiana",
