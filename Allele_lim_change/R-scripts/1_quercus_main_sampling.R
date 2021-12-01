@@ -223,7 +223,7 @@ for(i in 1:length(species_list)) {
     }
     
     #calculating Fst
-    if(fst_flag == TRUE) {
+    if((fst_flag == TRUE) && (j <=100)) {
     
       ##creating genind list for QUAC genind 
       temp_genind_list[[j]] <- temp_genind
