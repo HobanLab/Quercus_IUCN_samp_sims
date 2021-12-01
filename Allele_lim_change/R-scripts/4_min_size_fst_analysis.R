@@ -59,8 +59,14 @@ save(prop_captured, file="prop_captured.Rdata")
 ##########################################################################################################
 #Checking Fst - to make sure the simulations are realistic
 
-#load in data from all_quercus_sampling.R
-load("new_fst.Rdata")
+#version variable keeps track of which version of simulation parameters you are working with
+#orig = original
+#alt = alternative
+version = "orig"
+
+#Loading in results from all_quercus_sampling.R
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
+load(paste("quercus_fst_", version, ".Rdata", sep=""))
 
 #creating an array to store all Fst results in
 #dimensions 14 (14 species) by 3 (first column is mean Fst, second column is min Fst, third column is max Fst)

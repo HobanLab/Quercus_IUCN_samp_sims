@@ -39,7 +39,7 @@ conversion_flag = FALSE
 #Fst flag
 #Fst code adds a lot of time to run the code 
 #so if you don't want to run it, keep Fst off by setting it FALSE
-fst_flag = FALSE
+fst_flag = TRUE
 #allele category flag
 #this flag allows code that runs the allele category code to be turned on
 #when the flag is set to TRUE
