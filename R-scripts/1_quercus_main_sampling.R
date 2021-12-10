@@ -145,14 +145,7 @@ final_alleles_all_quercus = array(0, dim=c(500,1000,14))
 
 alleles_capt_all_quercus = array(0, dim=c(500,1000,14))
 
-#storing Fst results
-#saving a list of genind objects created
-temp_genind_list <- list()
-
-#list of hierfstat
-temp_hierfstat <- list()
-
-##min, max, mean of replicates 
+#storing Fst results: min, max, mean of replicates 
 mean_max_min_fst = array(dim = c(3,100,14))#Fst run on 100 replicates
 
 #ALLELE CATEGORIES VARAIBLES 
@@ -193,7 +186,7 @@ all_cap_cat_df <- matrix(nrow = length(species_list), ncol = length(list_allele_
 
 #Loop to simulate sampling
 #First, create a list of all genepop files (all replicates) to loop over
-#the variable 'i' represents each replicate
+#the variable 'i' represents each species, 'j' represents each replicate
 for(i in 1:length(species_list)) {
   setwd(paste(mydir,species_list[i],sep=""))
   list_files = list.files(paste(mydir,species_list[i],sep=""), pattern = ".gen$")
@@ -224,21 +217,10 @@ for(i in 1:length(species_list)) {
     
     #calculating Fst
     if((fst_flag == TRUE) && (j <=100)) {
-    
-      ##creating genind list for QUAC genind 
-      temp_genind_list[[j]] <- temp_genind
+		pwfst <- pairwise.neifst(genind2hierfstat(temp_genind))
       
-      ##convert genind files to hierfstat format to run pwfst 
-      temp_hierfstat[[j]] <- genind2hierfstat(temp_genind_list[[j]])
-      
-      ##array to store all pwfst values
-      pwfst <- pairwise.neifst(temp_hierfstat[[j]])
-      
-      ##calculate statistics for QUAC - max, min, mean fst 
-      ##and save results in a matrix for all species
-      mean_max_min_fst[1,j,i] <- mean(pwfst, na.rm = TRUE)
-      mean_max_min_fst[2,j,i] <- min(pwfst, na.rm = TRUE)
-      mean_max_min_fst[3,j,i] <- max(pwfst, na.rm = TRUE)
+       ##calculate - max, min, mean fst and save results in a matrix for all species
+		mean_max_min_fst[1:3,j,i] <- c(mean(pwfst, na.rm = TRUE), min(pwfst, na.rm = TRUE), max(pwfst, na.rm = TRUE))
       
     }
     
