@@ -48,15 +48,15 @@ allele_cat_flag = FALSE
 #Set working directory
 if(.Platform$OS.type=='windows') { 
   if(version=='orig'){
-    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original_sim_files" #If Windows and original sims, use this file path
+    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Original_sim_files" #If Windows and original sims, use this file path
   } else if(version=='alt'){
-    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Alternative_sim_files"
+    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_sim_files"
   }
 } else if(.Platform$OS.type=='unix') {
   if(version=='orig') {
-    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Allele_lim_change/Original_sim_files" #If Linux, use this file path
+    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Original_sim_files" #If Linux, use this file path
   } else if(version=='alt'){
-    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Allele_lim_change/Alternative_sim_files"
+    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Alternative_sim_files"
   }
 }
 setwd(mydir)
@@ -121,7 +121,7 @@ if(conversion_flag == TRUE) {
 }
 
 #including file with useful functions written by Dr. Sean Hoban
-source("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R_scripts\\Fa_sample_funcs.R")
+source("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R-scripts\\Fa_sample_funcs.R")
 ##functions
 colMax <- function(data) sapply(data, max, na.rm = TRUE)
 sample.pop<-function(genind_obj,vect_pop_ID,vect_samp_sizes){
@@ -291,7 +291,7 @@ for(i in 1:length(species_list)) {
 }
 
 #saving results to a .Rdata file 
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\Original\\R-scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R-scripts")
 save(final_quercus_results, file=paste("quercus_final_results_", version, ".Rdata", sep=""))
 save(final_alleles_all_quercus, file=paste("quercus_total_alleles_", version, ".Rdata", sep=""))
 save(alleles_capt_all_quercus, file=paste("quercus_num_alleles_capt_", version, ".Rdata", sep=""))

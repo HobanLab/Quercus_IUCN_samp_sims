@@ -20,7 +20,7 @@ library(dplyr)
 version = "alt"
 
 #Loading in results from previous script
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")#directory
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R-scripts")#directory
 load(paste("quercus_final_results_", version, ".Rdata", sep=""))#file name
 
 #vector of species names
@@ -54,6 +54,6 @@ for(i in 1:length(species_names)) {
 combined_quercus_new = do.call(rbind, combined_quercus_list)
 
 #saving the combined dataframe in .Rdata file
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R-scripts")
 save(combined_quercus_new, file=paste("combined_quercus_", version, ".Rdata", sep=""))
 

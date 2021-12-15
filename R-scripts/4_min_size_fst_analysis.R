@@ -16,7 +16,7 @@
 version = "orig"
 
 #Loading in results from all_quercus_sampling.R
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R-scripts")
 load(paste("quercus_final_results_", version, ".Rdata", sep=""))
 
 num_species = 14
@@ -65,7 +65,7 @@ save(prop_captured, file="prop_captured.Rdata")
 version = "orig"
 
 #Loading in results from all_quercus_sampling.R
-setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Allele_lim_change\\R-scripts")
+setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R-scripts")
 load(paste("quercus_fst_", version, ".Rdata", sep=""))
 
 #creating an array to store all Fst results in
@@ -76,3 +76,5 @@ for(j in 1:num_species) {
   fst_results[j,] = rowMeans(mean_max_min_fst[,,j])
 }
 save(fst_results, file="fst_processed.Rdata")
+
+fst_results
