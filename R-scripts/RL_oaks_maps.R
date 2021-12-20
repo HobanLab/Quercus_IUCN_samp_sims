@@ -1,5 +1,10 @@
 
-# setwd('C:/Users/abrow/Documents/Quercus_IUCN_samp_sims')
+# This code creates maps of population for 3 oak species, along with a 
+# North American inset. 
+# Inkscape was used to combine these maps into a single figure for publication
+
+# Written by Alissa Brown; 19 Dec 2021
+
 require(dplyr)
 require(ggplot2)
 require(sp)

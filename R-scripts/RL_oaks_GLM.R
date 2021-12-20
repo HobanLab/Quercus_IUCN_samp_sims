@@ -1,5 +1,13 @@
 
-# setwd('C:/Users/abrow/Documents/Quercus_IUCN_samp_sims')
+# This code does this following: 
+# 1. restructures simulation output
+# 2. constructs a generalized linear model(GLM)
+# 3. calculates pairwise contrasts of model interaction terms
+# 4. makes model predictions and plots them for each simulation type
+# 5. calculates the minimum sample size needed for each taxon/simulation type
+
+# Written by Alissa Brown; 19 Dec 2021
+
 require(dplyr)
 require(tidyr)
 require(ggplot2)
