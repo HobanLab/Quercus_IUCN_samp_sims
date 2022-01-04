@@ -1,11 +1,25 @@
 # Quercus_IUCN_samp_sims
 Repository storing code, simulation, and parameter files that represent IUCN Red List endangered oaks for honor's capstone project at Northern Illinois University. This project is being completed in collaboration with Emily Schumacher, Dr. Sean Hoban, and Dr. Alissa Brown from the Morton Arboretum and Dr. Holly Jones from Northern Illinois University. 
 
-#### Background 
-The overall aim of this project is to contribute to practical seed sampling guidelines for creating and maintaining genetically diverse collections for botanic garden and arboreta. Informing these sampling guidelines is one way to ensure a genetically representative sample is obtained from wild populations. Prior work has found that it is important to consider species' traits like dispersal, mode of reproduction, population history, and more, when sampling from wild populations. For this project, we focused on the genus Quercus (oaks) and studied 14 species that the IUCN Red List describes as vulnerable. Oaks are keystone species for many environments and have a high ecological importance. In addition, oaks cannot be seed banked using traditional methods, so they must be conserved through living collections. Since maintaining living collections requires extensive space and energy for gardens, creating efficient collections that represent the diversity of wild oak populations is extremely important. Thus, creating and maintaining genetically diverse collections in botanic gardens and arboreta is essential for the future survival and restoration of these rare, endangered species, and this can be achieved through proper sampling techniques. 
+#### Overview
+The overall aim of this project is to contribute to practical seed sampling guidelines for creating and maintaining genetically diverse collections for botanic garden and arboreta. Informing these sampling guidelines is one way to ensure a genetically representative sample is obtained from wild populations. Prior work has found that it is important to consider species' traits like dispersal, mode of reproduction, population history, and more, when sampling from wild populations. For this project, we focused on the genus Quercus (oaks) and studied 14 species that the IUCN Red List describes as vulnerable. Oaks are keystone species for many environments and have a high ecological importance. In addition, oaks cannot be seed banked using traditional methods, so they must be conserved through living collections. Since maintaining living collections requires extensive space and energy for gardens, creating efficient collections that represent the diversity of wild oak populations is extremely important. Thus, creating and maintaining genetically diverse collections in botanic gardens and arboreta is essential for the future survival and restoration of these rare, endangered species, and this can be achieved through proper sampling techniques.
+
+Here, we aim to determine if closely-related species (within the same genus) with similar biology, dispersal, and life history traits but different ranges and population sizes would have similar minimum sample sizes.
+
+There were three main goals in this project: 
+1) Determine minimum sample sizes to capture 95% diversity for 14 threatened oaks
+2) Determine if one minimum sample size can fit all 14 oaks studied
+3) Determine the extent to which parameter values chosen for simulation impact the minimum sample size
+
 
 #### Summary
-We chose 14 species of oaks from the IUCN Red List of Endangered Species in the US. Each of these oaks the IUCN Red List describes as vulnerable. We created species-tailored parameter values to represent each species realistically in simulation, using the software Simcoal 2. In addition, we run alternative simulations for each species, varying the parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values. We then created scripts with R that represent sampling from the simulated populations. Here, we tested a broad entire range of sampling for each species--from one individual, to 500 individuals. From this, we determine the minimum sample size required to capture 95% of the species’ genetic diversity (a common threshold for sufficient genetic diversity). With this data, we aim to recommend a minimum sample size to capture sufficient genetic diversity for each of these species, which would be directly useful to botanic gardens and arboreta. Furthermore, we aim to determine whether one minimum sample size can be recommended to sufficiently capture the diversity of all of these vulnerable oaks. We also determine if changing the parameter values used for simulation significantly impacts the minimum sample size required, by creating 'alternative' simulations. 
+We chose 14 species of oaks from the IUCN Red List of Endangered Species in the US. Each of these oaks the IUCN Red List describes as vulnerable. We created species-tailored parameter values to represent each species realistically in simulation, using the software Simcoal 2. In addition, we run alternative simulations for each species, varying the parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values. We then created scripts with R that represent sampling from the simulated populations. Here, we tested a broad entire range of sampling for each species--from one individual, to 500 individuals. From this, we determine the minimum sample size required to capture 95% of the species’ genetic diversity (a common threshold for sufficient genetic diversity). With this data, we aim to recommend a minimum sample size to capture sufficient genetic diversity for each of these species, which would be directly useful to botanic gardens and arboreta. Furthermore, we aim to determine whether one minimum sample size can be recommended to sufficiently capture the diversity of all of these vulnerable oaks. 
+
+We also determine if changing the parameter values used for simulation significantly impacts the minimum sample size required, by creating 'alternative' simulations. In the alternative simulations for each species, we varied a parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values and determine how much the parameters chosen for simulation impact the minimum sample size. 
+
+#### Analysis
+We ran a generalized linear model (GLM) to determine the minimum sample sizes needed to adequately capture genetic diversity for each of the 14 oak species. We calculated pairwise contrasts using the emmeans package (Lenth, 2021) to determine whether the difference between the number of alleles captured between the two simulation types (original and alternative) was significant for each taxon.
+
 
 #### File types
 **Parameter files:**
@@ -25,10 +39,9 @@ We chose 14 species of oaks from the IUCN Red List of Endangered Species in the 
     R scripts should be run in the order: 1_quercus_main_sampling.R -> 2_quercus_data_processing.R -> 3_quercus_plotting.R -> 4_min_size_fst_analysis.R -> 5_regression_analysis_plot.R
 
 ### Directory contents
-    Allele_lim_change: contains new simulation files and R-scripts after the allele limit was changed.
-        R-scripts: contains R script files
-        Alternative_sim_files: contains simulation files for the alternative set of simulation parameters
-        Original_sim files: contains simulation files for the original set of simulation parameters
-        Figures: contains figures made with ggplot2
-    FastSimCoal_check: contains test simulation files to verfiy that the results are comparable between versions of Simcoal (FastSimcoal and Simcoal 2)
-    Old simulations: contains old simulation files and R-scripts before the allele limit was changed (Note: will be archived eventually, as the new simulations replace these, since they are more realistic)
+    Alternative_sim_files: contains simulation files for the alternative set of simulation parameters
+    Original_sim files: contains simulation files for the original set of simulation parameters
+    R-scripts: contains R-scripts used for importing and converting data, sampling, data analysis, and data visualization 
+    Figures: contains data visualization figures in .png, .pdf, and .svg format 
+    Mapping: contains data used for mapping as well as maps generated 
+    
