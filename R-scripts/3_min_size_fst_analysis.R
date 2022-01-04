@@ -31,31 +31,6 @@ for(i in 1:num_species) {
 }
 save(minSize, file=paste("min_samp_size_", version, ".Rdata", sep=""))
 
-#########################################################################################################
-#QUARTILES 
-
-#defining a list to save the quartiles for each species 
-lower_quartile = vector(length = num_species)
-upper_quartile = vector(length = num_species)
-lower_quartile_row = vector(length = num_species)
-upper_quartile_row = vector(length = num_species)
-#Loop to calculate quartiles for each species
-for(i in 1:num_species) {
-  lower_quartile[i] = quantile(rowMeans(final_quercus_results[,,i]), probs = c(0.25))
-  lower_quartile_row[i] = min(which(rowMeans(final_quercus_results[,,i])>=lower_quartile[i]))
-  
-  upper_quartile[i] = quantile(rowMeans(final_quercus_results[,,i]), probs = c(0.75))
-  upper_quartile_row[i] = min(which(rowMeans(final_quercus_results[,,i])>=upper_quartile[i]))
-}
-
-##########################################################################################################
-#Proportion captured in sample size of 50
-prop_captured = vector(length=num_species)
-for(i in 1:num_species) {
-  prop_captured[i] = mean(final_quercus_results[50,,i])
-}
-save(prop_captured, file="prop_captured.Rdata")
-
 ##########################################################################################################
 #Checking Fst - to make sure the simulations are realistic
 

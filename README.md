@@ -1,5 +1,5 @@
 # Quercus_IUCN_samp_sims
-Repository storing code, simulation, and parameter files that represent IUCN Red List endangered oaks for honor's capstone project at Northern Illinois University. This project is being completed in collaboration with Emily Schumacher, Dr. Sean Hoban, and Dr. Alissa Brown from the Morton Arboretum and Dr. Holly Jones from Northern Illinois University. 
+Repository storing code, simulation, and parameter files that represent IUCN Red List endangered oaks for honor's capstone project at Northern Illinois University. This project is being completed in collaboration with Emily Schumacher, Dr. Sean Hoban, and Dr. Alissa Brown from the Morton Arboretum.
 
 #### Overview
 The overall aim of this project is to contribute to practical seed sampling guidelines for creating and maintaining genetically diverse collections for botanic garden and arboreta. Informing these sampling guidelines is one way to ensure a genetically representative sample is obtained from wild populations. Prior work has found that it is important to consider species' traits like dispersal, mode of reproduction, population history, and more, when sampling from wild populations. For this project, we focused on the genus Quercus (oaks) and studied 14 species that the IUCN Red List describes as vulnerable. Oaks are keystone species for many environments and have a high ecological importance. In addition, oaks cannot be seed banked using traditional methods, so they must be conserved through living collections. Since maintaining living collections requires extensive space and energy for gardens, creating efficient collections that represent the diversity of wild oak populations is extremely important. Thus, creating and maintaining genetically diverse collections in botanic gardens and arboreta is essential for the future survival and restoration of these rare, endangered species, and this can be achieved through proper sampling techniques.
@@ -30,18 +30,24 @@ We ran a generalized linear model (GLM) to determine the minimum sample sizes ne
     You may also open the software Simcoal 2, which will then prompt for the parameter file name
     After both cases, Simcoal 2 will ask for the number of simulation replicates and the genetic data type. Here we used 1 for the genetic data type of all simulations, representing diploid individuals. 
 **Simulation output files:**
-    .par .arp .gen .simparam
-    Created through the software Simcoal2 after a parameter file is successfully imported into Simcoal2 and the simulation is run.  The .arp files (genetic data) are the initial dataset in Arlequin format; the .gen files are the datasets after conversion to genepop format.  The .simparam is just a mirror file of simulation parameters run. 
-    Note that only the first 25 simulation files for each species are stored on the GitHub repository. The rest are stored on a local drive, due to the large number of replicates. 
+    .par [.arp .gen .simparam]
+    Created through the software Simcoal2 after a parameter file (.par) is successfully imported into Simcoal2 and the simulation is run.  The .arp files (genetic data) are the initial dataset in Arlequin format; the .gen files are the datasets after conversion to genepop format.  The .simparam is just a mirror file of simulation parameters run. 
+    Note that only the .par files for each species are stored on the GitHub repository. The simulation output files are stored on a local drive, due to the large number of replicates. 
 **Rscripts:**
-    .R 
+    .R .Rdata
     For this project, R scripts were used to import .arp files into R for conversion to .gen files through adegenet package, convert .gen files to genind objects through adegenet package, analyze data through functions associated with the adegenet package, run custom sampling scripts, and create figures for data visualization with package ggplot2
-    R scripts should be run in the order: 1_quercus_main_sampling.R -> 2_quercus_data_processing.R -> 3_quercus_plotting.R -> 4_min_size_fst_analysis.R -> 5_regression_analysis_plot.R
 
 ### Directory contents
-    Alternative_sim_files: contains simulation files for the alternative set of simulation parameters
-    Original_sim files: contains simulation files for the original set of simulation parameters
+    Alternative_sim_files: contains simulation parameter files for the alternative set of simulation parameters
+    Original_sim files: contains simulation parameter files for the original set of simulation parameters
     R-scripts: contains R-scripts used for importing and converting data, sampling, data analysis, and data visualization 
+        R scripts should be run in the order: 
+            1_quercus_main_sampling.R (imports and converts files, runs main sampling loop) 
+            2_quercus_data_processing.R (concatenates data for all species into one large, processed dataframe for ease of use in the following scripts)
+            3_min_size_fst_analysis.R (calculates minimum sample sizes and Fst of each species) 
+        For the data analysis and visualization, we used the R script: 
+            RL_oaks_GLM.R (runs GLM on the data, creates figures from the GLM output)
+        There are also various .Rdata files which store the data we generated from simulations, sampling, and other processing in R (For example, we have saved Fst data, minimum sample sizes, number of alleles captured, etc...)
     Figures: contains data visualization figures in .png, .pdf, and .svg format 
     Mapping: contains data used for mapping as well as maps generated 
     
