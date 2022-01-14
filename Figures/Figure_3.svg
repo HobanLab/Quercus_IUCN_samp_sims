@@ -76,7 +76,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -226,6 +226,13 @@
        style="fill:#ffffff"
        clip-path="url(#clipPath1085-2)"
        transform="matrix(1.302521,0,0,1.302521,-45.871716,22.016319)" />
+    <rect
+       style="opacity:0.991;fill:#ffffff;stroke-width:0.15"
+       id="rect863"
+       width="2.2678571"
+       height="4.5357141"
+       x="207.8869"
+       y="151.94643" />
   </g>
   <g
      inkscape:groupmode="layer"

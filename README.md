@@ -39,16 +39,27 @@ We ran a generalized linear model (GLM) to determine the minimum sample sizes ne
     For this project, R scripts were used to import .arp files into R for conversion to .gen files through adegenet package, convert .gen files to genind objects through adegenet package, analyze data through functions associated with the adegenet package, run custom sampling scripts, and create figures for data visualization with package ggplot2
 
 ### Directory contents
-    Alternative_sim_files: contains simulation parameter files for the alternative set of simulation parameters
-    Original_sim files: contains simulation parameter files for the original set of simulation parameters
-    R-scripts: contains R-scripts used for importing and converting data, sampling, data analysis, and data visualization 
-        R scripts should be run in the order: 
-            1_quercus_main_sampling.R (imports and converts files, runs main sampling loop) 
-            2_quercus_data_processing.R (concatenates data for all species into one large, processed dataframe for ease of use in the following scripts)
-            3_min_size_fst_analysis.R (calculates minimum sample sizes and Fst of each species) 
-        For the data analysis and visualization, we used the R script: 
-            RL_oaks_GLM.R (runs GLM on the data, creates figures from the GLM output)
-        There are also various .Rdata files which store the data we generated from simulations, sampling, and other processing in R (For example, we have saved Fst data, minimum sample sizes, number of alleles captured, etc...)
-    Figures: contains data visualization figures in .png, .pdf, and .svg format 
-    Mapping: contains data used for mapping as well as maps generated 
+**Alternative_sim_files:** contains simulation parameter files for the alternative set of simulation parameters
+**Original_sim files:** contains simulation parameter files for the original set of simulation parameters
+**R-scripts:** contains R-scripts used for importing and converting data, sampling, data analysis, and data visualization 
+R scripts should be run in the order: 
+    1_quercus_main_sampling.R (imports and converts files, runs main sampling loop) 
+    2_quercus_data_processing.R (concatenates data for all species into one large, processed dataframe for ease of use in the following scripts)
+    3_min_size_fst_analysis.R (calculates minimum sample sizes and Fst of each species) 
+    4_RL_oaks_GLM.R (runs GLM on the data, creates figures from the GLM output)
+    5_RL_oaks_maps.R (creates maps of each species distribution, which are saved in the Mapping folder below)
+There are also various .Rdata files which store the data we generated from simulations, sampling, and other processing in R
+    quercus_final_results_alt.Rdata: 3D matrix storing the proportion of alleles captured during sampling for each species for the alternative simulations, created at the end of 1_quercus_main_sampling.R
+    quercus_final_results_orig.Rdata: 3D matrix storing the proportion of alleles captured during sampling for each species for the original simulations, created at the end of 1_quercus_main_sampling.R
+    quercus_total_alleles_alt.Rdata: 3D matrix storing the total alleles present for each species for the alternative simulations
+    quercus_total_alleles_orig.Rdata: 3D matrix storing the total alleles present for each species for the original simulations
+    quercus_num_alleles_capt_alt.Rdata: 3D matrix storing the number of alleles captured for each species in the alternative simulations (as opposed to proportion)
+    quercus_num_alleles_capt_orig.Rdata: 3D matrix storing the number of alleles captured for each species in the original simulations (as opposed to proportion)
+    combined_quercus_alt.Rdata: data frame made by concatenating all species matrices from quercus_final_results_alt.Rdata. the data frame is used to plot in ggplot
+    combined_quercus_orig.Rdata: data frame made by concatenating all species matrices from quercus_final_results_orig.Rdata. the data frame is used to plot in ggplot
+    quercus_fst_altern.Rdata: saves Fst data for each species in the alternative simulations 
+    quercus_fst_orig.Rdata: saves Fst data for each species in the original simulations
+    fst_processed.Rdata: processed Fst data by taking the mean Fst for each species
+**Figures:** contains data visualization figures in .png, .pdf, and .svg format 
+**Mapping:** contains data used for mapping as well as maps generated 
     
