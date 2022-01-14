@@ -14,7 +14,7 @@ There were three main goals in this project:
 
 
 #### Summary
-We chose 14 species of oaks from the IUCN Red List of Endangered Species in the US. Each of these oaks the IUCN Red List describes as vulnerable. We created species-tailored parameter values to represent each species realistically in simulation, using the software Simcoal 2. In addition, we run alternative simulations for each species, varying the parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values. We then created scripts with R that represent sampling from the simulated populations. Here, we tested a broad entire range of sampling for each species--from one individual, to 500 individuals. From this, we determine the minimum sample size required to capture 95% of the species’ genetic diversity (a common threshold for sufficient genetic diversity). With this data, we aim to recommend a minimum sample size to capture sufficient genetic diversity for each of these species, which would be directly useful to botanic gardens and arboreta. Furthermore, we aim to determine whether one minimum sample size can be recommended to sufficiently capture the diversity of all of these vulnerable oaks. 
+We chose 14 species of oaks from the IUCN Red List of Endangered Species in the US. Each of these oaks the IUCN Red List describes as vulnerable. We created species-tailored parameter values to represent each species realistically in simulation, using the software fastsimcoal. In addition, we run alternative simulations for each species, varying the parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values. We then created scripts with R that represent sampling from the simulated populations. Here, we tested a broad entire range of sampling for each species--from one individual, to 500 individuals. From this, we determine the minimum sample size required to capture 95% of the species’ genetic diversity (a common threshold for sufficient genetic diversity). With this data, we aim to recommend a minimum sample size to capture sufficient genetic diversity for each of these species, which would be directly useful to botanic gardens and arboreta. Furthermore, we aim to determine whether one minimum sample size can be recommended to sufficiently capture the diversity of all of these vulnerable oaks. 
 
 We also determine if changing the parameter values used for simulation significantly impacts the minimum sample size required, by creating 'alternative' simulations. In the alternative simulations for each species, we varied a parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values and determine how much the parameters chosen for simulation impact the minimum sample size. 
 
@@ -26,10 +26,9 @@ We ran a generalized linear model (GLM) to determine the minimum sample sizes ne
 **Parameter files:**    
     .par .txt  
     Edited in text editor Notepad++  
-    These are input to the software Simcoal/Simcoal2 to create genetic datasets The .par signifies parameter files.  They contain information to create the genetic datasets via a coalescent simulation, including population sizes and migration rates. Parameter files are written in the text editor Notepad++   
-    There are multiple methods of running parameter files in Simcoal 2. You can run Simcoal 2 through the command line with the prompt: SIMCOAL2_1_2 <\file_name>  
-    You may also open the software Simcoal 2, which will then prompt for the parameter file name  
-    After both cases, Simcoal 2 will ask for the number of simulation replicates and the genetic data type. Here we used 1 for the genetic data type of all simulations, representing diploid individuals.  
+    These are input to the software fastsimcoal to create genetic datasets The .par signifies parameter files.  They contain information to create the genetic datasets via a coalescent simulation, including population sizes and migration rates. Parameter files are written in the text editor Notepad++   
+    You can run fastsimcoal through the command line with the prompt: fsc26 <\file_name> -g 1 -n 1000  
+    Here we used 1 for the genetic data type of all simulations, representing diploid individuals and 1000 for 1000 simulation replicates.  
     
 **Simulation output files:**    
     .par [.arp .gen .simparam]  
