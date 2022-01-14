@@ -23,27 +23,25 @@ We ran a generalized linear model (GLM) to determine the minimum sample sizes ne
 
 
 #### File types
-##### Parameter files:
+Parameter files:
     .par .txt
     Edited in text editor Notepad++
     These are input to the software Simcoal/Simcoal2 to create genetic datasets The .par signifies parameter files.  They contain information to create the genetic datasets via a coalescent simulation, including population sizes and migration rates. Parameter files are written in the text editor Notepad++ 
     There are multiple methods of running parameter files in Simcoal 2. You can run Simcoal 2 through the command line with the prompt: SIMCOAL2_1_2 <\file_name>
     You may also open the software Simcoal 2, which will then prompt for the parameter file name
     After both cases, Simcoal 2 will ask for the number of simulation replicates and the genetic data type. Here we used 1 for the genetic data type of all simulations, representing diploid individuals. 
-##### Simulation output files:
+Simulation output files:
     .par [.arp .gen .simparam]
     Created through the software Simcoal2 after a parameter file (.par) is successfully imported into Simcoal2 and the simulation is run.  The .arp files (genetic data) are the initial dataset in Arlequin format; the .gen files are the datasets after conversion to genepop format.  The .simparam is just a mirror file of simulation parameters run. 
     Note that only the .par files for each species are stored on the GitHub repository. The simulation output files are stored on a local drive, due to the large number of replicates. 
-##### Rscripts:
+Rscripts:
     .R .Rdata
     For this project, R scripts were used to import .arp files into R for conversion to .gen files through adegenet package, convert .gen files to genind objects through adegenet package, analyze data through functions associated with the adegenet package, run custom sampling scripts, and create figures for data visualization with package ggplot2
 
 #### Directory contents
-**Alternative_sim_files:** contains simulation parameter files for the alternative set of simulation parameters
-
-**Original_sim files:** contains simulation parameter files for the original set of simulation parameters
-
-**R-scripts:** contains R-scripts used for importing and converting data, sampling, data analysis, and data visualization 
+Alternative_sim_files: contains simulation parameter files for the alternative set of simulation parameters
+Original_sim files: contains simulation parameter files for the original set of simulation parameters
+R-scripts: contains R-scripts used for importing and converting data, sampling, data analysis, and data visualization 
 R scripts should be run in the order: 
     1_quercus_main_sampling.R (imports and converts files, runs main sampling loop) 
     2_quercus_data_processing.R (concatenates data for all species into one large, processed dataframe for ease of use in the following scripts)
@@ -62,8 +60,6 @@ There are also various .Rdata files which store the data we generated from simul
     quercus_fst_altern.Rdata: saves Fst data for each species in the alternative simulations 
     quercus_fst_orig.Rdata: saves Fst data for each species in the original simulations
     fst_processed.Rdata: processed Fst data by taking the mean Fst for each species
-
-**Figures:** contains data visualization figures in .png, .pdf, and .svg format 
-
-**Mapping:** contains data used for mapping as well as maps generated 
+Figures: contains data visualization figures in .png, .pdf, and .svg format 
+Mapping: contains data used for mapping as well as maps generated 
     
