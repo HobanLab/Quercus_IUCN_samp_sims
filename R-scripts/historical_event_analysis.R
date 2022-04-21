@@ -44,13 +44,10 @@ mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims_local/Historical_event_
 setwd(mydir)
 
 #creating a list of the species we have simulated
-species_list = c("q_acerifolia",
-                 "q_arkansana",
-                 "q_pacifica")
-
-for(c in 1:length(species_list)) {
-    species_list[[c]] = paste("/", species_list[[c]], sep="")
-}
+species_list = c("/q_acerifolia",
+                 "/q_boyntonii",
+                 "/q_carmenensis",
+                 "/q_oglethorpensis")
 
 #defining the maximum number of individuals we want to sample
 #for practical purposes, this will be 500 indivduals 
@@ -105,14 +102,14 @@ sample.pop<-function(genind_obj,vect_pop_ID,vect_samp_sizes){
 #first dimension: 500, sampling from 1 to 500 individuals per species, saving results for each iteration
 #second dimension: 100 for 100 simulation replicates per species
 #third dimension: 14, for 14 quercus species. this is represented by the outer for loop (14 matrix 'slices')
-final_quercus_results = array(0, dim = c(500,100,3))
+final_quercus_results = array(0, dim = c(500,100,4))
 
-final_alleles_all_quercus = array(0, dim=c(500,100,3))
+final_alleles_all_quercus = array(0, dim=c(500,100,4))
 
-alleles_capt_all_quercus = array(0, dim=c(500,100,3))
+alleles_capt_all_quercus = array(0, dim=c(500,100,4))
 
 #storing Fst results: min, max, mean of replicates 
-mean_max_min_fst = array(dim = c(3,100,3))#Fst run on 100 replicates
+mean_max_min_fst = array(dim = c(3,100,4))#Fst run on 100 replicates
 
 #ALLELE CATEGORIES VARAIBLES 
 ##allele frequency categories 

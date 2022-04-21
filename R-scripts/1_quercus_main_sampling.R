@@ -45,46 +45,29 @@ fst_flag = TRUE
 #when the flag is set to TRUE
 allele_cat_flag = FALSE
 
-#Set working directory
-if(.Platform$OS.type=='windows') { 
-  if(version=='orig'){
-    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Original_sim_files" #If Windows and original sims, use this file path
-  } else if(version=='alt'){
-    mydir = "C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\Alternative_sim_files"
-  }
-} else if(.Platform$OS.type=='unix') {
-  if(version=='orig') {
-    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Original_sim_files" #If Linux, use this file path
-  } else if(version=='alt'){
-    mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Alternative_sim_files"
-  }
+#Set working directory to the folder containing simulation files
+if(version=='orig'){
+  mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Original_sim_files" #If Windows and original sims, use this file path
+} else if(version=='alt'){
+  mydir = "C:/Users/kayle/Documents/Quercus_IUCN_samp_sims/Alternative_sim_files"
 }
 setwd(mydir)
 
 #creating a list of the species we have simulated
-species_list = c("q_acerifolia",
-                 "q_arkansana",
-                 "q_austrina",
-                 "q_boyntonii",
-                 "q_carmenensis",
-                 "q_cedrosensis",
-                 "q_engelmannii",
-                 "q_georgiana",
-                 "q_graciliformis",
-                 "q_havardii",
-                 "q_hinckleyii",
-                 "q_oglethorpensis",
-                 "q_pacifica",
-                 "q_tomentella")
-if(.Platform$OS.type=='windows'){
-  for(c in 1:length(species_list)) {
-    species_list[[c]] = paste("\\", species_list[[c]], sep="")
-  }
-} else if(.Platform$OS.type=='unix'){
-  for(v in 1:length(species_list)){
-    species_list[[v]] = paste("/", species_list[[v]], sep="")
-  }
-}
+species_list = c("/q_acerifolia",
+                 "/q_arkansana",
+                 "/q_austrina",
+                 "/q_boyntonii",
+                 "/q_carmenensis",
+                 "/q_cedrosensis",
+                 "/q_engelmannii",
+                 "/q_georgiana",
+                 "/q_graciliformis",
+                 "/q_havardii",
+                 "/q_hinckleyii",
+                 "/q_oglethorpensis",
+                 "/q_pacifica",
+                 "/q_tomentella")
 
 #defining the maximum number of individuals we want to sample
 #for practical purposes, this will be 500 indivduals 
@@ -107,6 +90,8 @@ import_arp2gen_files = function(mypath, mypattern) {
 }
 
 #converting all simulation files from arlequin format to genepop format using defined import function
+#here we check if Windows computer or Linux, Windows doesn't allow mclapply() to make the process faster
+#but Linux computers should run the code faster
 if(conversion_flag == TRUE) {
   if(.Platform$OS.type=="windows") { #Windows doesn't allow forking or mclapply(), so we do convert normally, which is time consuming
     for(x in 1:length(species_list)) {

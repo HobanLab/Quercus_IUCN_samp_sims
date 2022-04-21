@@ -37,7 +37,7 @@ save(minSize, file=paste("min_samp_size_", version, ".Rdata", sep=""))
 #version variable keeps track of which version of simulation parameters you are working with
 #orig = original
 #alt = alternative
-version = "orig"
+version = "altern"
 
 #Loading in results from all_quercus_sampling.R
 setwd("C:\\Users\\kayle\\Documents\\Quercus_IUCN_samp_sims\\R-scripts")
