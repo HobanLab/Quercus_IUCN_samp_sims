@@ -10,13 +10,15 @@ Here, we aim to determine if closely-related species (within the same genus) wit
 There were three main goals in this project: 
 1) Determine minimum sample sizes to capture 95% diversity for 14 threatened oaks
 2) Determine if one minimum sample size can fit all 14 oaks studied
-3) Determine the extent to which parameter values chosen for simulation impact the minimum sample size
+3) Determine if parameter uncertainty impacts the minimum sample size 
 
 
 #### Summary
 We chose 14 species of oaks from the IUCN Red List of Endangered Species in the US. Each of these oaks the IUCN Red List describes as vulnerable. We created species-tailored parameter values to represent each species realistically in simulation, using the software fastsimcoal. In addition, we run alternative simulations for each species, varying the parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values. We then created scripts with R that represent sampling from the simulated populations. Here, we tested a broad entire range of sampling for each species--from one individual, to 500 individuals. From this, we determine the minimum sample size required to capture 95% of the species’ genetic diversity (a common threshold for sufficient genetic diversity). With this data, we aim to recommend a minimum sample size to capture sufficient genetic diversity for each of these species, which would be directly useful to botanic gardens and arboreta. Furthermore, we aim to determine whether one minimum sample size can be recommended to sufficiently capture the diversity of all of these vulnerable oaks. 
 
-We also determine if changing the parameter values used for simulation significantly impacts the minimum sample size required, by creating 'alternative' simulations. In the alternative simulations for each species, we varied a parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values and determine how much the parameters chosen for simulation impact the minimum sample size. 
+We also determine if changing the parameter values used for simulation significantly impacts the minimum sample size required, by creating 'alternative' simulations. In the alternative simulations for each species, we varied a parameter value that we had the least amount of confidence in, so that we can account for estimations within our parameter values and determine how much the parameters chosen for simulation impact the minimum sample size.
+
+Finally, we run additional simulations to test the impact of a constant parameter in all simulations, where we vary the time since populations merged. In our simulations, we use a timeframe of 10,000 generations, so we changed the value to 500 generations for 3 test species. 
 
 #### Analysis
 We ran a generalized linear model (GLM) to determine the minimum sample sizes needed to adequately capture genetic diversity for each of the 14 oak species. We calculated pairwise contrasts using the emmeans package (Lenth, 2021) to determine whether the difference between the number of alleles captured between the two simulation types (original and alternative) was significant for each taxon.
@@ -42,6 +44,7 @@ We ran a generalized linear model (GLM) to determine the minimum sample sizes ne
 #### Directory contents
 **Alternative_sim_files:** contains simulation parameter files for the alternative set of simulation parameters  
 **Original_sim files:** contains simulation parameter files for the original set of simulation parameters  
+**Empirical_data_files:** contains adegenet files for several species where empirical population genetic data was availabe for comparison to our simulated data
 **R-scripts:** contains R-scripts used for importing and converting data, sampling, data analysis, and data visualization   
 R scripts should be run in the order:   
     1_quercus_main_sampling.R (imports and converts files, runs main sampling loop)   
@@ -63,6 +66,6 @@ There are also various .Rdata files which store the data we generated from simul
     quercus_fst_orig.Rdata: saves Fst data for each species in the original simulations  
     fst_processed.Rdata: processed Fst data by taking the mean Fst for each species  
    
-**Figures:** contains data visualization figures in .png, .pdf, and .svg format  
-**Mapping:** contains data used for mapping as well as maps generated   
+**Figures_tables:** contains data visualization figures in .png, .pdf, and .svg format  
+**Mapping:** contains data used for mapping, R scripts to generate maps, as well as maps generated   
     
