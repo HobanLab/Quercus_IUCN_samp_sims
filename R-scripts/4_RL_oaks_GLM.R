@@ -15,20 +15,22 @@ require(gridExtra)
 require(ggthemes)
 require(emmeans)
 
+setwd("Quercus_IUCN_samp_sims/")
+
 # READ AND RESTRUCTURE DATA ---------------------------------------------------
-load('data/quercus_num_alleles_capt_orig.RData')
+load('R-scripts/quercus_num_alleles_capt_orig.RData')
 capt_orig <- alleles_capt_all_quercus
 
-load('data/quercus_num_alleles_capt_alt.RData')
+load('R-scripts/quercus_num_alleles_capt_alt.RData')
 capt_alt <- alleles_capt_all_quercus
 
-load('data/quercus_total_alleles_orig.RData')
+load('R-scripts/quercus_total_alleles_orig.RData')
 total_orig <- final_alleles_all_quercus
 
-load('data/quercus_total_alleles_alt.RData')
+load('R-scripts/quercus_total_alleles_alt.RData')
 total_alt <- final_alleles_all_quercus
 
-taxa <- read.csv('data/all_existing_by_sp_df.csv', stringsAsFactors = FALSE)
+taxa <- read.csv('Figures_tables/all_existing_by_sp_df.csv', stringsAsFactors = FALSE)
 taxa <- as.vector(taxa$X)
 
 rm(alleles_capt_all_quercus, final_alleles_all_quercus)
